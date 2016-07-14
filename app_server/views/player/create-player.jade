@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  
+  form.form-horizontal(action='/players/create-player',method='get', role='form')
+    .form-group
+      label.control-label(for='name') Name
+      input#name.form-control
+    .form-group
+      label.control-label(for='position') Position
+      select#position.form-control(name='position')
+        option Goalkeeper
+        option Defense
+        option Offense
+    .form-group
+      label.control-label(for='number') Number
+      input#number.form-control(type='number', name='number')
+    .form-group
+      label.control-label(for='days') Available days to play
+      input#days.form-control(type='textarea', name='days')
+    button.btn.btn-primary.pull-right Add player
