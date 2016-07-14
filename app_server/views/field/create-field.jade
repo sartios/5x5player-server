@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+
+  form.form-horizontal(action='/fields/create-field', method='get', role='form')
+    .form-group
+      label.control-label(for='name') Name
+      input#name.form-control(name='size')
+    .form-group
+      label.control-label(for='size') Size
+      input#size.form-control(type='number', name='size')
+    .form-group
+      label.control-label(for='location') Location
+      input#location.form-control(name='location')
+    button.btn.btn-primary.pull-right Add Field
