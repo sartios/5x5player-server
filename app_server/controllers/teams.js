@@ -9,3 +9,7 @@ module.exports.viewCreateTeam = function(req, res){
 module.exports.createTeam = function(req, res){
     res.render('team/teams');
 };
+
+module.exports.editTeam = function(req, res){
+    res.render('team/teams');
+};

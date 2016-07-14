@@ -9,3 +9,7 @@ module.exports.viewCreatePlayer = function(req, res){
 module.exports.createPlayer = function(req, res){
   res.render('player/players');
 };
+
+module.exports.editPlayer = function(req, res){
+  res.render('player/players');
+};
