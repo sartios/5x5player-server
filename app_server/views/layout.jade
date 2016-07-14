@@ -3,5 +3,33 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
   body
-    block content
+    nav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle(data-toggle='collapse', data-target='#5x5PlayerNavbar')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') 5x5 Player
+        #5x5PlayerNavbar.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(href='#') Players
+            li
+              a(href='#') Teams
+            li
+              a(href='#') Fields
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='#')
+                span.glyphicon.glyphicon-user Sign Up
+            li
+              a(href='#')
+                span.glyphicon.glyphicon-log-in Login
+    .row
+      .container-fluid
+        block content
+  script(src='/jquery/jquery.min.js')
+  script(src='/bootstrap/js/bootstrap.min.js')
