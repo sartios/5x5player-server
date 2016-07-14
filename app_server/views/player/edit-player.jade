@@ -2,10 +2,10 @@ extends ../layout
 
 block content
   
-  form.form-horizontal(action='/players/create-player',method='get', role='form')
+  form.form-horizontal(action='/players/update-player',method='get', role='form')
     .form-group
       label.control-label(for='name') Name
-      input#name.form-control
+      input#name.form-control(name='name', value='#{player.name}')
     .form-group
       label.control-label(for='position') Position
       select#position.form-control(name='position')
@@ -14,8 +14,8 @@ block content
         option Offense
     .form-group
       label.control-label(for='number') Number
-      input#number.form-control(type='number', name='number')
+      input#number.form-control(type='number', name='number', value='#{player.number}')
     .form-group
       label.control-label(for='days') Available days to play
-      input#days.form-control(type='textarea', name='days')
-    button.btn.btn-primary.pull-right Add Player
+      input#days.form-control(type='textarea', name='days', value='#{player.days}')
+    button.btn.btn-primary.pull-right Update Player

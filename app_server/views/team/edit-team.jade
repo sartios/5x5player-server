@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  form.form-horizontal(action='/teams/update-team', method='get', role='form')
+    .form-group
+      label.control-label(for='name') Name
+      input#name.form-control(name='name',value='#{team.name}')
+    .form-group
+      label.control-label(for='players') Players
+      input#players.form-control(name='players', type='textarea', value='#{team.players}')
+    .form-group
+      label.control-label(for='location') Location
+      input#location.form-control(name='location', value='#{team.location}')
+    .form-group
+      label.control-label(for='level') Level
+      select#level.form-control(name='level', value='#{team.level}')
+        option Begginer
+        option Advanced
+        option Expert
+    button.btn.btn-primary Update Team

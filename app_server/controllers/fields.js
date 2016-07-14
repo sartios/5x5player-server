@@ -11,5 +11,15 @@ module.exports.createField = function(req, res){
 };
 
 module.exports.editField = function(req, res){
+    res.render('field/edit-field',{
+        field : {
+            name : 'sample name',
+            size : 22,
+            location : 'City 2'
+        }
+    });
+};
+
+module.exports.updateField = function(req, res){
     res.render('field/fields');
 };
