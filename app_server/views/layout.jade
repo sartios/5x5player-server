@@ -16,20 +16,23 @@ html
         #5x5PlayerNavbar.collapse.navbar-collapse
           ul.nav.navbar-nav
             li
-              a(href='#') Players
+              a(href='/players') Players
             li
-              a(href='#') Teams
+              a(href='/teams') Teams
             li
-              a(href='#') Fields
+              a(href='/fields') Fields
           ul.nav.navbar-nav.navbar-right
             li
-              a(href='#')
+              a(href='/sign-up')
                 span.glyphicon.glyphicon-user Sign Up
             li
-              a(href='#')
+              a(href='/login')
                 span.glyphicon.glyphicon-log-in Login
     .row
       .container-fluid
-        block content
+        .col-sm-3
+        .col-sm-6
+          block content
+        .col-sm-3
   script(src='/jquery/jquery.min.js')
   script(src='/bootstrap/js/bootstrap.min.js')
