@@ -10,40 +10,13 @@ block content
           th Location
           th Actions
       tbody
-        tr
-          td Company 1
-          td 5
-          td City 1, AA 111 BBB
-          td
-            a(href='/fields/edit/1')
-              span.glyphicon.glyphicon-edit
-        tr
-          td Company 1
-          td 5
-          td City 1, AA 111 BBB
-          td
-            a(href='/fields/edit/2')
-              span.glyphicon.glyphicon-edit
-        tr
-          td Company 2
-          td 5
-          td City 1, AA 111 BBB
-          td
-            a(href='/fields/edit/3')
-              span.glyphicon.glyphicon-edit
-        tr
-          td Company 2
-          td 5
-          td City 1, AA 111 BBB
-          td
-            a(href='/fields/edit/4')
-              span.glyphicon.glyphicon-edit
-        tr
-          td Company 2
-          td 5
-          td City 1, AA 111 BBB
-          td
-            a(href='/fields/edit/5')
-              span.glyphicon.glyphicon-edit
+        each field in fields
+          tr
+            td #{field.company.name} - #{field.name}
+            td #{field.size}
+            td #{field.location}
+            td
+              a(href='/fields/edit/#{field.id}')
+                span.glyphicon.glyphicon-edit
   a.pull-right(href='/fields/new')
     span.btn.btn-primary  Add Field
