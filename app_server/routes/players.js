@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var ctrlPlayers = require('../controllers/players');
 
-router.get('/', function(req, res){
-  res.render('player/players',{title: 'Players'});
-});
+router.get('/', ctrlPlayers.listPlayers);
 
 module.exports = router;

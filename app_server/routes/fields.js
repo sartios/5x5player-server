@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var ctrlFields = require('../controllers/fields');
 
-router.get('/', function(req, res){
-  res.render('field/fields',{});
-});
+router.get('/', ctrlFields.listFields);
 
 module.exports = router;

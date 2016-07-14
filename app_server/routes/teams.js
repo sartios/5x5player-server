@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var ctrlTeams = require('../controllers/teams');
 
-router.get('/', function(req, res){
-  res.render('team/teams', {});
-});
+router.get('/', ctrlTeams.listTeams);
 
 module.exports = router;
