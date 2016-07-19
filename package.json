@@ -2,8 +2,8 @@
   "name": "server",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
+  "scripts":{
+    "test": "mocha --reporter spec test/**/*.js"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -17,9 +17,7 @@
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
-    "jasmine-node": "^1.14.5"
-  },
-  "scripts":{
-  	"test": "jasmine-node spec"
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
   }
 }
