@@ -24,6 +24,14 @@ module.exports.fieldsCreate = function(req, res){
     name: req.body.name,
     company: {name: req.body.company},
     size: req.body.size
+  }, function(err, field){
+    if(err){
+      console.log(err);
+      sendJSONresponse(res, 400, err);
+    }else{
+      console.log(field);
+      sendJSONresponse(res, 200, field);
+    }
   });
 };
 

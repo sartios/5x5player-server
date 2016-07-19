@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 var dbURI = 'mongodb://localhost/5x5player';
 
