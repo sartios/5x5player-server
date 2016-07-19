@@ -9,12 +9,10 @@ var sendJSONresponse = function(res, status, content){
 /* GET list of fields */
 module.exports.fieldsList = function(req, res){
   Field.find({}, function(err, results, stats){
-    var fields;
     if(err){
       console.log('find error: ', err);
       sendJSONresponse(res, 404, err);
     }else{
-      //fields = buildFieldList(req, res, results, stats);
       sendJSONresponse(res, 200, results);
     }
   });
