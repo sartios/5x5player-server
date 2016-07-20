@@ -135,7 +135,6 @@ describe('Fields API', function(){
       };
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(204);
-        done();
       });
 
       requestOptions = {
