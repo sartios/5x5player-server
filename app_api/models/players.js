@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 
 var availableDaySchema = new mongoose.Schema({
-  day: {type: String, required: true},
-  time: {type: String, required: true}
+  day: {type: String},
+  time: {type: String}
 });
 
 var playerSchema = new mongoose.Schema({

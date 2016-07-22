@@ -123,14 +123,10 @@ describe('Fields API', function(){
     });
 
     it('should delete the field', function(done){
-      postdata = {
-        name: 'Field 1 modified',
-        size: 22
-      };
       requestOptions = {
         url: apiOptions.server + '/api/fields/' + field._id,
         method: "DELETE",
-        json: postdata,
+        json: {},
         qs:{}
       };
       request(requestOptions, function(err, response, body){

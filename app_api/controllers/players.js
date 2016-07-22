@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Player = mongoose.model('Player');
 
 
-var sendJSONresponse = function(req, status, message){
+var sendJSONresponse = function(res, status, message){
   res.status(status);
   res.json(message);
 };
@@ -13,7 +13,7 @@ module.exports.playersList = function(req, res){
       console.log('find error: ', err);
       sendJSONresponse(res, 404, err);
     }else{
-      sendJSONresponse(res, 200, results);
+      sendJSONresponse(res, 200, result);
     }
   });
 };
@@ -28,6 +28,13 @@ module.exports.playersCreate = function(req, res){
         day: req.body.day,
         time: req.body.time
       }
+  }, function(err, player){
+    if(err){
+      console.log(err);
+      sendJSONresponse(res, 404, err);
+    }else if(player){
+      sendJSONresponse(res, 200, player);
+    }
   });
 };
 
@@ -86,7 +93,7 @@ module.exports.playersUpdateOne = function(req, res){
         if(err){
           sendJSONresponse(res, 404, err);
         }else{
-          sendJSONresponse(res, 200, field);
+          sendJSONresponse(res, 200, player);
         }
       });
     });
@@ -111,4 +118,17 @@ module.exports.playersDeleteOne = function(req, res){
       "message": "No fieldid"
     });
   }
+};
+
+module.exports.deleteAll = function(req, res){
+  Player
+    .remove({}, function(err){
+      if(err){
+        console.log(err);
+        sendJSONresponse(res, 404, err);
+        return;
+      }
+      console.log('Players collection has been deleted');
+      sendJSONresponse(res, 204, null);
+    });
 };
