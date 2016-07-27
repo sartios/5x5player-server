@@ -13,7 +13,9 @@ var teamSchema = new mongoose.Schema({
   name: {type: String, required: true},
   players: [{type: mongoose.Schema.Types.ObjectId, ref: 'Player'}],
   city: locationSchema,
-  level: {type: String, enum: ['Beginner', 'Advanced', 'Expert']}
+  level: {type: String, enum: ['Beginner', 'Advanced', 'Expert']},
+  createOn: {type: Date,"default": Date.now},
+  modifiedOn: {type: Date,"default": Date.now}
 });
 
 mongoose.model('Team', teamSchema);

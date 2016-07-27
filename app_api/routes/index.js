@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var ctrlFields = require('../controllers/fields');
 var ctrlPlayers = require('../controllers/players');
+var ctrlTeams = require('../controllers/teams');
 
 
 /* Fields API */
@@ -19,5 +20,9 @@ router.delete('/players', ctrlPlayers.deleteAll);
 router.get('/players/:playerid', ctrlPlayers.playersReadOne);
 router.put('/players/:playerid', ctrlPlayers.playersUpdateOne);
 router.delete('/players/:playerid', ctrlPlayers.playersDeleteOne);
+
+/* Teams API*/
+router.get('/teams', ctrlTeams.teamsList);
+router.post('/teams', ctrlTeams.teamsCreate);
 
 module.exports = router;
