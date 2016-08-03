@@ -39,7 +39,7 @@ module.exports.playersCreate = function(req, res){
 };
 
 module.exports.playersReadOne = function(req, res){
-  console.log('Finding field details', req.params);
+  console.log('Finding player details', req.params);
   if(req.params && req.params.playerid){
     Player
       .findById(req.params.playerid)
@@ -115,7 +115,7 @@ module.exports.playersDeleteOne = function(req, res){
       });
   }else{
     sendJSONresponse(res, 404, {
-      "message": "No fieldid"
+      "message": "No playerid"
     });
   }
 };

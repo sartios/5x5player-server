@@ -73,3 +73,173 @@ var validatePlayers = function(req){
   }
   return promises;
 };
+
+module.exports.teamsReadOne = function(req, res){
+  console.log('Finding team details', req.params);
+  if(req.params && req.params.teamid){
+    Team
+      .findById(req.params.teamid)
+      .exec(function(err, team){
+        if(!team){
+          sendJSONresponse(res, 404, {
+            "message": "teamid not found"
+          });
+          return;
+        }else if(err){
+          console.log(err);
+          sendJSONresponse(res, 404, err);
+          return;
+        }
+        console.log(team);
+        sendJSONresponse(res, 200, team);
+      });
+  }else{
+    console.log('No teamid specified');
+    sendJSONresponse(res, 404, {
+      "message": "No teamid in request"
+    });
+  }
+};
+
+module.exports.teamsUpdateOne = function(req, res){
+  if(!req.params.teamid){
+    sendJSONresponse(res, 404, {
+      "message": "Not found, teamid is required"
+    });
+    return;
+  }
+  Team
+    .findById(req.params.teamid)
+    .select('-players')
+    .exec(function(err, team){
+      if(!team){
+        sendJSONresponse(res, 404, {
+          "message": "teamid not found"
+        });
+        return;
+      }else if(err){
+        sendJSONresponse(res, 400, err);
+        return;
+      }
+      team.city = req.param.city;
+      team.level = req.param.level;
+      team.modifiedOn = new Date();
+
+      team.save(function(err, team){
+        if(err){
+          sendJSONresponse(res, 404, err);
+        }else{
+          sendJSONresponse(res, 200, team);
+        }
+      });
+    });
+};
+
+module.exports.teamsAddPlayer = function(req, res){
+  if(!req.params.teamid && !req.params.playerid){
+    sendJSONresponse(res, 404, {
+      "message": "Not found, teamid and playerid required"
+    });
+    return;
+  }
+  Team
+    .findById(req.params.teamid)
+    .exec(function(err, team){
+      if(!team){
+        sendJSONresponse(res, 404, {
+          "message": "teamid not found"
+        });
+        return;
+      }else if(err){
+        sendJSONresponse(res, 404, {
+          "message": "teamid not found"
+        });
+        return;
+      }
+      team.players.push(req.params.playerid);
+      team.modifiedOn = new Date();
+      team.save(function(err, team){
+        if(err){
+          sendJSONresponse(res, 404, err);
+        }else{
+          sendJSONresponse(res, 200, team);
+        }
+      });
+    });
+};
+
+module.exports.teamsRemovePlayer = function(req, res){
+  if(!req.params.teamid && !req.params.playerid){
+    sendJSONresponse(res, 404, {
+      "message": "Not found, teamid and playerid required"
+    });
+    return;
+  }
+  Team
+    .findById(req.params.teamid)
+    .exec(function(err, team){
+      if(!team){
+        sendJSONresponse(res, 404, {
+          "message": "teamid not found"
+        });
+        return;
+      }else if(err){
+        sendJSONresponse(res, 404, {
+          "message": "teamid not found"
+        });
+        return;
+      }
+      var playerIndex = -1;
+      team.players.forEach(function(player, index){
+        if(player == req.params.playerid){
+          playerIndex = index;
+          return;
+        }
+      });
+      if(player > -1){
+        team.players.splice(playerIndex, 1);
+      }
+      team.modifiedOn = new Date();
+      team.save(function(err, team){
+        if(err){
+          sendJSONresponse(res, 404, err);
+        }else{
+          sendJSONresponse(res, 200, team);
+        }
+      });
+    });
+};
+
+module.exports.teamsDeleteOne = function(req, res){
+  var teamid = req.params.teamid;
+  if(teamid){
+    Team
+      .findByIdAndRemove(teamid)
+      .exec(function(err, team){
+        if(err){
+          console.log(err);
+          sendJSONresponse(res, 404, err);
+          return;
+        }
+        console.log('Team id ' + teamid + ' deleted');
+        sendJSONresponse(res, 204, null);
+      });
+  }else{
+    sendJSONresponse(res, 404, {
+      "message" : "No teamid"
+    });
+  }
+};
+
+module.exports.deleteAll = function(req, res){
+  Team
+    .remove({},function(req, res){
+      if(err){
+        console.log(err);
+        sendJSONresponse(res, 404, err);
+        return;
+      }
+      console.log('Teams collections has been deleted');
+      sendJSONresponse(res, 204, null);
+    });
+};
