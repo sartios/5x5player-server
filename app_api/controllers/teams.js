@@ -121,14 +121,15 @@ module.exports.teamsUpdateOne = function(req, res){
         sendJSONresponse(res, 400, err);
         return;
       }
-      team.city = req.param.city;
-      team.level = req.param.level;
+      team.city = req.body.city;
+      team.level = req.body.level;
       team.modifiedOn = new Date();
 
       team.save(function(err, team){
         if(err){
           sendJSONresponse(res, 404, err);
         }else{
+          console.log(team);
           sendJSONresponse(res, 200, team);
         }
       });
@@ -136,7 +137,7 @@ module.exports.teamsUpdateOne = function(req, res){
 };
 
 module.exports.teamsAddPlayer = function(req, res){
-  if(!req.params.teamid && !req.params.playerid){
+  if(!req.params.teamid){
     sendJSONresponse(res, 404, {
       "message": "Not found, teamid and playerid required"
     });
@@ -151,17 +152,21 @@ module.exports.teamsAddPlayer = function(req, res){
         });
         return;
       }else if(err){
+        console.log('error: ', err);
         sendJSONresponse(res, 404, {
           "message": "teamid not found"
         });
         return;
       }
-      team.players.push(req.params.playerid);
+      console.log('Add player: ' , req.body.playerid);
+      team.players.push(req.body.playerid);
       team.modifiedOn = new Date();
       team.save(function(err, team){
         if(err){
+          console.log('error: ', err);
           sendJSONresponse(res, 404, err);
         }else{
+          console.log('Updated: ', team);
           sendJSONresponse(res, 200, team);
         }
       });
@@ -169,7 +174,7 @@ module.exports.teamsAddPlayer = function(req, res){
 };
 
 module.exports.teamsRemovePlayer = function(req, res){
-  if(!req.params.teamid && !req.params.playerid){
+  if(!req.params.teamid && !req.body.playerid){
     sendJSONresponse(res, 404, {
       "message": "Not found, teamid and playerid required"
     });
@@ -191,12 +196,12 @@ module.exports.teamsRemovePlayer = function(req, res){
       }
       var playerIndex = -1;
       team.players.forEach(function(player, index){
-        if(player == req.params.playerid){
+        if(player == req.body.playerid){
           playerIndex = index;
           return;
         }
       });
-      if(player > -1){
+      if(playerIndex > -1){
         team.players.splice(playerIndex, 1);
       }
       team.modifiedOn = new Date();
@@ -233,7 +238,7 @@ module.exports.teamsDeleteOne = function(req, res){
 
 module.exports.deleteAll = function(req, res){
   Team
-    .remove({},function(req, res){
+    .remove({},function(err, team){
       if(err){
         console.log(err);
         sendJSONresponse(res, 404, err);

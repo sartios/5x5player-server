@@ -22,13 +22,13 @@ router.delete('/players', ctrlPlayers.deleteAll);
 
 /* Teams API*/
 router.get('/teams', ctrlTeams.teamsList);
-router.get('/teams/:teamId', ctrlTeams.teamsReadOne);
+router.get('/teams/:teamid', ctrlTeams.teamsReadOne);
 router.post('/teams', ctrlTeams.teamsCreate);
-router.put('/teams/:teamId', ctrlTeams.teamsUpdateOne);
-router.put('teams/:teamId/add-player/:playerId', ctrlTeams.teamsAddPlayer);
-router.put('teams/:teamId/remove-player/:playerId', ctrlTeams.teamsRemovePlayer);
+router.put('/teams/:teamid', ctrlTeams.teamsUpdateOne);
+router.put('/teams/:teamid/add-player', ctrlTeams.teamsAddPlayer);
+router.put('/teams/:teamid/remove-player', ctrlTeams.teamsRemovePlayer);
 router.delete('/teams', ctrlTeams.deleteAll);
-router.delete('/teams/:teamId', ctrlTeams.teamsDeleteOne);
+router.delete('/teams/:teamid', ctrlTeams.teamsDeleteOne);
 
 
 module.exports = router;
