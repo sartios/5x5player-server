@@ -1,20 +1,21 @@
 extends ../layout
 
 block content
-  form.form-horizontal(action='/teams/create-team', method='get', role='form')
-    .form-group
-      label.control-label(for='name') Name
-      input#name.form-control(name='name')
-    .form-group
-      label.control-label(for='players') Players
-      input#players.form-control(name='players', type='textarea')
-    .form-group
-      label.control-label(for='location') Location
-      input#location.form-control(name='location')
-    .form-group
-      label.control-label(for='level') Level
-      select#level.form-control(name='level')
-        option Begginer
-        option Advanced
-        option Expert
-    button.btn.btn-primary Add Team
+  div(ng-controller='TeamCreateController')
+    form.form-horizontal(role='form')
+      .form-group
+        label.control-label(for='name') Name
+        input#name.form-control(name='name', ng-model='team.name')
+      .form-group
+        label.control-label(for='players') Players
+        input#players.form-control(name='players', type='textarea', ng-model='team.players')
+      .form-group
+        label.control-label(for='location') Location
+        input#location.form-control(name='location', ng-model='team.location')
+      .form-group
+        label.control-label(for='level') Level
+        select#level.form-control(name='level', ng-model='team.level')
+          option Begginer
+          option Advanced
+          option Expert
+      button.btn.btn-primary(ng-click='addTeam()') Add Team

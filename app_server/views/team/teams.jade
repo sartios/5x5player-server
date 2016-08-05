@@ -1,25 +1,25 @@
 extends ..\layout
 
 block content
-  .table-responsive
-    table.table.table-hover
-      thead
-        tr
-          th Name
-          th Players
-          th Location
-          th Level
-          th Actions
-      tbody
-        each team in teams
+  div(ng-controller='TeamListController')
+    .table-responsive
+      table.table.table-hover
+        thead
           tr
-            td #{team.name}
-            td #{team.players.length}
-            td #{team.city}
-            td #{team.level}
-            td 
-              a(href='/teams/edit/#{team.id}')
-                span.glyphicon.glyphicon-edit
-  a.pull-right(href='/teams/new')
-    span.btn.btn-primary  Add Team
+            th Name
+            th Players
+            th Location
+            th Level
+            th Actions
+        tbody
+            tr(ng-repeat='team in teams')
+              td {{team.name}}
+              td {{team.players.length}}
+              td {{team.city}}
+              td {{team.level}}
+              td 
+                a(href='/teams/edit/{{team.id}}')
+                  span.glyphicon.glyphicon-edit
+    a.pull-right(href='/teams/new')
+      span.btn.btn-primary  Add Team
     

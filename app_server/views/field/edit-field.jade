@@ -1,15 +1,15 @@
 extends ../layout
 
 block content
-
-  form.form-horizontal(action='/fields/update-field', method='get', role='form')
-    .form-group
-      label.control-label(for='name') Name
-      input#name.form-control(name='name', value='#{field.name}')
-    .form-group
-      label.control-label(for='size') Size
-      input#size.form-control(type='number', name='size', value='#{field.size}')
-    .form-group
-      label.control-label(for='location') Location
-      input#location.form-control(name='location', value='#{field.location}')
-    button.btn.btn-primary.pull-right Update Field
+  div(ng-controller='FieldEditController')
+    form.form-horizontal(role='form')
+      .form-group
+        label.control-label(for='name') Name
+        input#name.form-control(name='name', ng-model='field.name')
+      .form-group
+        label.control-label(for='size') Size
+        input#size.form-control(type='number', name='size', ng-model='field.size')
+      .form-group
+        label.control-label(for='location') Location
+        input#location.form-control(name='location', ng-model='field.location')
+      button.btn.btn-primary.pull-right(ng-click='updateField()') Update Field

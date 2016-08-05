@@ -1,22 +1,22 @@
 extends ..\layout
 
 block content
-  .table-responsive
-    table.table.table-hover
-      thead
-        tr
-          th Company
-          th Size
-          th Location
-          th Actions
-      tbody
-        each field in fields
+  div(ng-controller='FieldListController')
+    .table-responsive
+      table.table.table-hover
+        thead
           tr
-            td #{field.company.name} - #{field.name}
-            td #{field.size}
-            td #{field.location}
-            td
-              a(href='/fields/edit/#{field.id}')
-                span.glyphicon.glyphicon-edit
-  a.pull-right(href='/fields/new')
-    span.btn.btn-primary  Add Field
+            th Company
+            th Size
+            th Location
+            th Actions
+        tbody
+            tr(ng-repeat='field in fields')
+              td {{field.company.name}} - {{field.name}}
+              td {{field.size}}
+              td {{field.location}}
+              td
+                a(href='/fields/edit/{{field.id}}')
+                  span.glyphicon.glyphicon-edit
+    a.pull-right(href='/fields/new')
+      span.btn.btn-primary  Add Field

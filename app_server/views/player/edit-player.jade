@@ -1,21 +1,21 @@
 extends ../layout
 
 block content
-  
-  form.form-horizontal(action='/players/update-player',method='get', role='form')
-    .form-group
-      label.control-label(for='name') Name
-      input#name.form-control(name='name', value='#{player.name}')
-    .form-group
-      label.control-label(for='position') Position
-      select#position.form-control(name='position')
-        option Goalkeeper
-        option Defense
-        option Offense
-    .form-group
-      label.control-label(for='number') Number
-      input#number.form-control(type='number', name='number', value='#{player.number}')
-    .form-group
-      label.control-label(for='days') Available days to play
-      input#days.form-control(type='textarea', name='days', value='#{player.days}')
-    button.btn.btn-primary.pull-right Update Player
+  div(ng-controller='PlayerEditController')
+    form.form-horizontal(role='form')
+      .form-group
+        label.control-label(for='name') Name
+        input#name.form-control(name='name', ng-model='player.name')
+      .form-group
+        label.control-label(for='position') Position
+        select#position.form-control(name='position', ng-model='player.position')
+          option Goalkeeper
+          option Defense
+          option Offense
+      .form-group
+        label.control-label(for='number') Number
+        input#number.form-control(type='number', name='number', ng-model='player.number')
+      .form-group
+        label.control-label(for='days') Available days to play
+        input#days.form-control(type='textarea', name='days', ng-model='player.days')
+      button.btn.btn-primary.pull-right(ng-click='updatePlayer()') Update Player

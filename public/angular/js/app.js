@@ -2,4 +2,7 @@
   'use strict';
 })();
 
-angular.module('app', []);
+angular.module('team', []);
+angular.module('player', []);
+angular.module('field', []);
+angular.module('app', ['team', 'player', 'field']);
