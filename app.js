@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 
 require('./app_api/models/db');
 
+var uglifyJs = require('uglify-js');
+var fs = require('fs');
+
 var routes = require('./app_server/routes/index');
 var routesApi = require('./app_api/routes/index');
 
@@ -15,6 +18,20 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname,'app_server', 'views'));
 app.set('view engine', 'jade');
+
+var appClientFiles = [];
+appClientFiles.push('app_client/js/app.js');
+appClientFiles.push('app_client/js/team/controllers.js');
+appClientFiles.push('app_client/js/field/controllers.js');
+appClientFiles.push('app_client/js/player/controllers.js');
+var uglified = uglifyJs.minify(appClientFiles, {compress: false});
+fs.writeFile('public/angular/5x5player.min.js', uglified.code, function(err){
+  if(err){
+    console.log(err);
+  }else{
+    console.log("Script generated and saved:", '5x5player.min.js');
+  }
+});
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
