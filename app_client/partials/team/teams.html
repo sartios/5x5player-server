@@ -1,0 +1,29 @@
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Players</th>
+        <th>Location</th>
+        <th>Level</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="team in vm.teams">
+        <td>{{team.name}}</td>
+        <td>{{team.players.length}}</td>
+        <td>{{team.city}}</td>
+        <td>{{team.level}}</td>
+        <td>
+          <a href="#/teams/edit/{{team.id}}">
+            <span class="glyphicon glyphicon-edit"></span>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<a href="#/teams/new" class="pull-right">
+  <span class="btn btn-primary">Add Team</span>
+</a>

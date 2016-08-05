@@ -14,7 +14,8 @@
     "mongoose": "^4.5.5",
     "morgan": "~1.7.0",
     "request": "^2.73.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "uglify-js": "^2.7.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

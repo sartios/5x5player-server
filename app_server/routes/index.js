@@ -6,7 +6,7 @@ var ctrlFields = require('../controllers/fields');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('layout', { title: '5x5 Player' });
 });
 
 /* GET team page. */

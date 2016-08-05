@@ -16,28 +16,30 @@ html(ng-app='app')
         #5x5PlayerNavbar.collapse.navbar-collapse
           ul.nav.navbar-nav
             li
-              a(href='/players') Players
+              a(href='/#/players') Players
             li
-              a(href='/teams') Teams
+              a(href='/#/teams') Teams
             li
-              a(href='/fields') Fields
+              a(href='/#/fields') Fields
           ul.nav.navbar-nav.navbar-right
             li
-              a(href='/sign-up')
+              a(href='/#/sign-up')
                 span.glyphicon.glyphicon-user Sign Up
             li
-              a(href='/login')
+              a(href='/#/login')
                 span.glyphicon.glyphicon-log-in Login
     .row
       .container-fluid
         .col-sm-3
         .col-sm-6
-          block content
+          div(ng-view)
+            block content
         .col-sm-3
-  script(src='/angular/js/angular.min.js')
-  script(src='/angular/js/app.js')
-  script(src='/angular/js/team/controllers.js')
-  script(src='/angular/js/player/controllers.js')
-  script(src='/angular/js/field/controllers.js')
+  script(src='/angular/angular.min.js')
+  script(src='/lib/angular-route.min.js')
+  script(src='/js/app.js')
+  script(src='/js/team/controllers.js')
+  script(src='/js/player/controllers.js')
+  script(src='/js/field/controllers.js')
   script(src='/jquery/jquery.min.js')
   script(src='/bootstrap/js/bootstrap.min.js')
