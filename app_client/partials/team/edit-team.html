@@ -1,18 +1,4 @@
-<div ng-if="vm.errorMsg">
-  <div class="alert alert-danger">
-    {{vm.errorMsg}}
-  </div>
-</div>
-<div ng-if="vm.updateErrorMsg">
-  <div class="alert alert-danger">
-    {{vm.updateErrorMsg}}
-  </div>
-</div>
-<div ng-if="vm.successMsg">
-  <div class="alert alert-info">
-    {{vm.successMsg}}
-  </div>
-</div>
+<error-generic error="vm.errorMsg"></error-generic>
 <div ng-if="!vm.errorMsg">
   <form class="form-horizontal" role="form">
     <div class="form-group">

@@ -1,0 +1,39 @@
+<success-generic success="vm.updateMsg.success"></success-generic>
+<success-generic success="vm.createMsg.success"></success-generic>
+<error-generic error="vm.updateMsg.error"></error-generic>
+<error-generic error="vm.createMsg.error"></error-generic>
+<error-generic error="vm.error"></error-generic>
+<div ng-if="vm.players.length == 0">
+  <div class="alert alert-info">
+    There are not available players
+  </div>
+</div>
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Number</th>
+        <th>Days</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="player in vm.players">
+        <td>{{player.name}}</td>
+        <td>{{player.position}}</td>
+        <td>{{player.number}}</td>
+        <td>{{player.days}}</td>
+        <td>
+          <a href="#/players/edit/{{player._id}}">
+            <span class="glyphicon glyphicon-edit"></span>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<a href="#/players/new" class="pull-right">
+  <span class="btn btn-primary">Add Player</span>
+</a>

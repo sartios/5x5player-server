@@ -1,59 +1,75 @@
-(function(){
-  'use strict';
+(function() {
+    'use strict';
+    /* jshint validthis: true */
 
-  angular.module('player')
-    .controller('PlayerListController', ['$scope', function($scope){
+    angular.module('player')
+        .controller('PlayerListController', listCtrl);
+    angular.module('player')
+        .controller('PlayerEditController', editCtrl);
+    angular.module('player')
+        .controller('PlayerCreateController', createCtrl);
 
-      var init = function(){
-        $scope.players = [{
-          id: 1,
-          name : 'Player 1',
-          position : 'Defense',
-          number : 7,
-          availableDays : ['Day 1 - 21:00','Day 2 - 20:00','Day 3 - 19:00']
-        },{
-          id: 2,
-          name : 'Player 2',
-          position : 'Goalkeeper',
-          number : 1,
-          availableDays : ['Day 1 - 21:00','Day 2 - 20:00','Day 3 - 19:00']
-        },{
-          id: 3,
-          name : 'Player 3',
-          position : 'Offense',
-          number : 10,
-          availableDays : ['Day 1 - 21:00','Day 2 - 20:00','Day 3 - 19:00']
-        }];
-      };
-      init();
-    }]);
+    listCtrl.$inject = ['PlayerService'];
 
-  angular.module('player')
-    .controller('PlayerCreateController', ['$scope', function($scope){
+    function listCtrl(PlayerService) {
+        var vm = this;
+        vm.players = [];
+        var init = function() {
+            PlayerService.getAllPlayers().success(function(data) {
+                vm.players = data;
+            }).error(function(data) {});
 
-      $scope.addPlayer = function(){
-        console.log($scope.player);
-      };
+            vm.createMsg = angular.copy(PlayerService.createMsg);
+            vm.updateMsg = angular.copy(PlayerService.updateMsg);
 
-      var init = function(){};
-      init();
-    }]);
-
-  angular.module('player')
-    .controller('PlayerEditController', ['$scope', function($scope){
-
-      $scope.updatePlayer = function(){
-        console.log($scope.player);
-      };
-
-      var init = function(){
-        $scope.player = {
-          name: 'Player name',
-          position: 'Goalkeeper',
-          number: 12,
-          days: ['21:00']
+            PlayerService.createMsg = {};
+            PlayerService.updateMsg = {};
         };
-      };
-      init();
-    }]);
+        init();
+    }
+
+    createCtrl.$inject = [];
+
+    function createCtrl() {
+        var vm = this;
+        vm.addPlayer = function() {
+            console.log(vm.player);
+        };
+
+        var init = function() {};
+        init();
+    }
+
+    editCtrl.$inject = ['playerId', '$location', 'PlayerService'];
+
+    function editCtrl(playerId, $location, PlayerService) {
+        var vm = this;
+        vm.updatePlayer = function() {
+            console.log(vm.player);
+            PlayerService.updatePlayer(vm.player)
+                .success(function(data) {
+                    PlayerService.updateMsg = {
+                        success: 'Player with id ' + data._id + ' has been successfully updated.'
+                    };
+                    $location.path('/players');
+                })
+                .error(function(data) {
+                    PlayerService.updateMsg = {
+                        error: 'An error occurred during ' + vm.player._id + ' player update.'
+                    };
+                    $location.path('/players');
+                });
+        };
+
+        var init = function() {
+            PlayerService.getPlayerById(playerId)
+                .success(function(data) {
+                    vm.player = data;
+                })
+                .error(function(data) {
+
+                });
+        };
+        init();
+    }
 })();

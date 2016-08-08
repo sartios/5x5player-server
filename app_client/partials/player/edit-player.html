@@ -1,0 +1,27 @@
+<error-generic error="vm.errorMsg"></error-generic>
+
+<div ng-if="!vm.errorMsg">
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label class="control-label" for="name">Name</label>
+      <input id="name" class="form-control" name="name" ng-model="vm.player.name"/>
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="position">Position</label>
+      <select id="position" class="form-control" ng-model="vm.player.position">
+        <option value="Defense">Defense</option>
+        <option value="Offense">Offense</option>
+        <option value="Goalkeeper">Goalkeeper</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="number">Number</label>
+      <input id="number" class="form-control" name="number" ng-model="vm.player.number"/>
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="days">Days</label>
+      <input id="days" class="form-control" name="days" type="textarea" ng-model="vm.player.days"/>
+    </div>
+    <button class="btn btn-primary" ng-click="vm.updatePlayer()"> Update Player</button>
+  </form>
+</div>
