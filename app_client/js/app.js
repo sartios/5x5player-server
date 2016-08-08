@@ -5,7 +5,7 @@
   angular.module('player', []);
   angular.module('field', []);
   angular.module('5x5playerApp', ['team', 'player', 'field', 'ngRoute'])
-    .config(function($routeProvider){
+    .config(function($routeProvider, $locationProvider){
 
       $routeProvider.when('/',{
         templateUrl: 'partials/home.html'
@@ -34,6 +34,11 @@
       });
 
       $routeProvider.otherwise('/home');
+
+      $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+      });
 
     });
 
