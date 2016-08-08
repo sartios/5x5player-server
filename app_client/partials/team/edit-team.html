@@ -1,23 +1,40 @@
-<form class="form-horizontal" role="form">
-  <div class="form-group">
-    <label class="control-label" for="name">Name</label>
-    <input id="name" class="form-control" name="name" ng-model="vm.team.name"/>
+<div ng-if="vm.errorMsg">
+  <div class="alert alert-danger">
+    {{vm.errorMsg}}
   </div>
-  <div class="form-group">
-    <label class="control-label" for="players">Players</label>
-    <input id="players" class="form-control" type="textarea" ng-model="vm.team.players"/>
+</div>
+<div ng-if="vm.updateErrorMsg">
+  <div class="alert alert-danger">
+    {{vm.updateErrorMsg}}
   </div>
-  <div class="form-group">
-    <label class="control-label" for="location">Location</label>
-    <input id="location" class="form-control" ng-model="vm.team.location"/>
+</div>
+<div ng-if="vm.successMsg">
+  <div class="alert alert-info">
+    {{vm.successMsg}}
   </div>
-  <div class="form-group">
-    <label class="control-label">Level</label>
-    <select id="level" class="form-control" ng-model="vm.team.level">
-      <option value="Beginner">Beginner</option>
-      <option value="Advanced">Advanced</option>
-      <option value="Expert">Expert</option>
-    </select>
-  </div>
-  <button class="btn btn-primary" ng-click="vm.updateTeam()"> Update Team</button>
-</form>
+</div>
+<div ng-if="!vm.errorMsg">
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label class="control-label" for="name">Name</label>
+      <input id="name" class="form-control" name="name" ng-model="vm.team.name"/>
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="players">Players</label>
+      <input id="players" class="form-control" type="textarea" ng-model="vm.team.players"/>
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="location">Location</label>
+      <input id="location" class="form-control" ng-model="vm.team.location"/>
+    </div>
+    <div class="form-group">
+      <label class="control-label">Level</label>
+      <select id="level" class="form-control" ng-model="vm.team.level">
+        <option value="Beginner">Beginner</option>
+        <option value="Advanced">Advanced</option>
+        <option value="Expert">Expert</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" ng-click="vm.updateTeam()"> Update Team</button>
+  </form>
+</div>

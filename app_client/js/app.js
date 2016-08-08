@@ -20,7 +20,12 @@
       $routeProvider.when('/teams/edit/:teamid', {
         templateUrl: 'partials/team/edit-team.html',
         controller: 'TeamEditController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve: {
+          teamId : ['$route', function($route){
+            return $route.current.params.teamid;
+          }],
+        }
       });
 
       $routeProvider.when('/teams/new', {
@@ -34,12 +39,6 @@
       });
 
       $routeProvider.otherwise('/home');
-
-      $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
-      });
-
     });
 
 })();
