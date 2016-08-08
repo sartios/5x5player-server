@@ -2,14 +2,14 @@
   'use strict';
   /* jshint validthis: true */
 
-angular.module('team')
-    .controller('TeamListController', listCtrl);
+  angular.module('team')
+      .controller('TeamListController', listCtrl);
 
-angular.module('team')
-    .controller('TeamCreateController', createCtrl);
+  angular.module('team')
+      .controller('TeamCreateController', createCtrl);
 
-angular.module('team')
-    .controller('TeamEditController', editCtrl);
+  angular.module('team')
+      .controller('TeamEditController', editCtrl);
 
 listCtrl.$inject = [];
 
@@ -72,4 +72,5 @@ function editCtrl() {
     };
     init();
 }
+
 })();

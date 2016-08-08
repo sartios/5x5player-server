@@ -4,7 +4,7 @@
   angular.module('team', []);
   angular.module('player', []);
   angular.module('field', []);
-  angular.module('app', ['team', 'player', 'field', 'ngRoute'])
+  angular.module('5x5playerApp', ['team', 'player', 'field', 'ngRoute'])
     .config(function($routeProvider){
 
       $routeProvider.when('/',{
