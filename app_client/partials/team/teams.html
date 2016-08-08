@@ -1,61 +1,37 @@
-<div ng-if="vm.updateMsg">
-  <div ng-if="vm.updateMsg.success">
-    <div class="alert alert-info">
-      {{vm.updateMsg.success}}
-    </div>
-  </div>
-  <div ng-if="vm.updateMsg.error">
-    <div class="alert alert-error">
-      {{vm.updateMsg.error}}
-    </div>
-  </div>
-</div>
-<div ng-if="vm.createMsg">
-  <div ng-if="vm.createMsg.success">
-    <div class="alert alert-info">
-      {{vm.createMsg.success}}
-    </div>
-  </div>
-  <div ng-if="vm.createMsg.error">
-    <div class="alert alert-error">
-      {{vm.createMsg.error}}
-    </div>
-  </div>
-</div>
-<div ng-if='vm.error'>
-  <div class="alert alert-error">
-    {{vm.error}}
-  </div>
-</div>
+<success-generic success="vm.updateMsg.success"></success-generic>
+<success-generic success="vm.createMsg.success"></success-generic>
+<error-generic error="vm.updateMsg.error"></error-generic>
+<error-generic error="vm.createMsg.error"></error-generic>
+<error-generic error="vm.error"></error-generic>
 <div ng-if="vm.teams == 0">
   <div class="alert alert-info">There are no teams available</div>
 </div>
-  <div class="table-responsive">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Players</th>
-          <th>Location</th>
-          <th>Level</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="team in vm.teams">
-          <td>{{team.name}}</td>
-          <td>{{team.players.length}}</td>
-          <td>{{team.city}}</td>
-          <td>{{team.level}}</td>
-          <td>
-            <a href="#/teams/edit/{{team._id}}">
-              <span class="glyphicon glyphicon-edit"></span>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Players</th>
+        <th>Location</th>
+        <th>Level</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="team in vm.teams">
+        <td>{{team.name}}</td>
+        <td>{{team.players.length}}</td>
+        <td>{{team.city}}</td>
+        <td>{{team.level}}</td>
+        <td>
+          <a href="#/teams/edit/{{team._id}}">
+            <span class="glyphicon glyphicon-edit"></span>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <a href="#/teams/new" class="pull-right">
   <span class="btn btn-primary">Add Team</span>
 </a>
