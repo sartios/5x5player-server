@@ -17,6 +17,10 @@
                 return $http.put('/api/players/' + player._id, player);
             };
 
+            service.createPlayer = function(player){
+                return $http.post('/api/players', player);
+            };
+
             service.createMsg = {};
             service.updateMsg = {};
 

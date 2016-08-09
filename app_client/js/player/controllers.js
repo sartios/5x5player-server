@@ -28,12 +28,23 @@
         init();
     }
 
-    createCtrl.$inject = [];
+    createCtrl.$inject = ['$location','PlayerService'];
 
-    function createCtrl() {
+    function createCtrl($location, PlayerService) {
         var vm = this;
-        vm.addPlayer = function() {
+        vm.createPlayer = function() {
             console.log(vm.player);
+            PlayerService.createPlayer(vm.player).success(function(data){
+                PlayerService.createMsg = {
+                    success: 'Player with id ' + data._id + ' has been successfully created.'
+                };
+                $location.path('/players');
+            }).error(function(data){
+                PlayerService.createMsg = {
+                    error: 'An error occurred during ' + vm.player.name + ' player create.'
+                };
+                $location.path('/players');
+            });
         };
 
         var init = function() {};

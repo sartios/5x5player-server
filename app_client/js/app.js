@@ -39,6 +39,10 @@
                         return $route.current.params.playerid;
                     }],
                 }
+            }).when('/players/new',{
+                templateUrl: 'partials/player/create-player.html',
+                controller: 'PlayerCreateController',
+                controllerAs: 'vm'
             }).when('/home', {
                 templateUrl: 'partials/home.html'
             }).otherwise('/home');
