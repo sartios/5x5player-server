@@ -244,7 +244,7 @@ module.exports.deleteAll = function(req, res){
         sendJSONresponse(res, 404, err);
         return;
       }
-      console.log('Teams collections has been deleted');
+      console.log('Teams collections have been deleted');
       sendJSONresponse(res, 204, null);
     });
 };

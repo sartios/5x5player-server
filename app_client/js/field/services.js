@@ -29,6 +29,10 @@
             return $http.delete('/api/fields/' + fieldId);
         };
 
+        service.deleteAll = function(){
+            return $http.delete('/api/fields');
+        };
+
         service.createMsg = {};
         service.updateMsg = {};
 

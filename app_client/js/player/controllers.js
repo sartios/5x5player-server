@@ -15,19 +15,36 @@
         var vm = this;
         vm.players = [];
 
-        vm.deletePlayer = function(playerid){
-            PlayerService.deletePlayer(playerid).success(function(data){
-                vm.deleteMsg = {success: 'Player with id ' + playerid + ' has been deleted successfully'};
+        vm.deletePlayer = function(playerid) {
+            PlayerService.deletePlayer(playerid).success(function(data) {
+                vm.deleteMsg = {
+                    success: 'Player with id ' + playerid + ' has been deleted successfully'
+                };
                 initPlayers();
-            }).error(function(data){
-                vm.deleteMsg = {error: data.message};
+            }).error(function(data) {
+                vm.deleteMsg = {
+                    error: data.message
+                };
             });
         };
 
-        var initPlayers = function(){
+        vm.deleteAll = function() {
+            PlayerService.deleteAll().success(function(data) {
+                vm.deleteMsg = {
+                    success: 'All players have been deleted successfully'
+                };
+                initPlayers();
+            }).error(function(data) {
+                vm.deleteMsg = {
+                    error: data.message
+                };
+            });
+        };
+
+        var initPlayers = function() {
             PlayerService.getAllPlayers().success(function(data) {
                 vm.players = data;
-                vm.total = vm.players.length
+                vm.total = vm.players.length;
             }).error(function(data) {});
         };
 
@@ -43,18 +60,18 @@
         init();
     }
 
-    createCtrl.$inject = ['$location','PlayerService'];
+    createCtrl.$inject = ['$location', 'PlayerService'];
 
     function createCtrl($location, PlayerService) {
         var vm = this;
         vm.createPlayer = function() {
             console.log(vm.player);
-            PlayerService.createPlayer(vm.player).success(function(data){
+            PlayerService.createPlayer(vm.player).success(function(data) {
                 PlayerService.createMsg = {
                     success: 'Player with id ' + data._id + ' has been successfully created.'
                 };
                 $location.path('/players');
-            }).error(function(data){
+            }).error(function(data) {
                 PlayerService.createMsg = {
                     error: data.message
                 };

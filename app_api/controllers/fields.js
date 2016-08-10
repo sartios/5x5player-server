@@ -119,3 +119,16 @@ module.exports.fieldsDeleteOne = function(req, res){
     });
   }
 };
+
+module.exports.deleteAll = function(req, res){
+  Field
+    .remove({}, function(err, field){
+      if(err){
+        console.log(err);
+        sendJSONresponse(res, 404, err);
+        return;
+      }
+      console.log('Fields collections have been deleted.');
+      sendJSONresponse(res, 204, null);
+    });
+};

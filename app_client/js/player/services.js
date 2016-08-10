@@ -17,12 +17,16 @@
                 return $http.put('/api/players/' + player._id, player);
             };
 
-            service.createPlayer = function(player){
+            service.createPlayer = function(player) {
                 return $http.post('/api/players', player);
             };
 
-            service.deletePlayer = function(playerid){
+            service.deletePlayer = function(playerid) {
                 return $http.delete('/api/players/' + playerid);
+            };
+
+            service.deleteAll = function() {
+                return $http.delete('/api/players');
             };
 
             service.createMsg = {};

@@ -11,6 +11,7 @@ router.get('/fields/:fieldid', ctrlFields.fieldsReadOne);
 router.post('/fields', ctrlFields.fieldsCreate);
 router.put('/fields/:fieldid', ctrlFields.fieldsUpdateOne);
 router.delete('/fields/:fieldid', ctrlFields.fieldsDeleteOne);
+router.delete('/fields', ctrlFields.deleteAll);
 
 /* Players API */
 router.get('/players', ctrlPlayers.playersList);

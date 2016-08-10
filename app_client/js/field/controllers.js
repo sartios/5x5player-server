@@ -25,6 +25,15 @@
             });
         };
 
+        vm.deleteAll = function(){
+            FieldService.deleteAll().success(function(data){
+                vm.deleteMsg = {success: 'All fields have been deleted successfully'};
+                intFields();
+            }).error(function(data){
+                vm.deleteMsg = {error: data.message};
+            });
+        };
+
         var intFields = function(){
             FieldService.getAllFields().success(function(data) {
                 vm.fields = data;
