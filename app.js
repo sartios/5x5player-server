@@ -5,8 +5,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var passport = require('passport');
 require('./app_api/models/db');
+require('./app_api/config/passport');
 
 var uglifyJs = require('uglify-js');
 var fs = require('fs');
@@ -19,6 +20,8 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname,'app_server', 'views'));
 app.set('view engine', 'jade');
+
+app.use(passport.initialize());
 
 var appClientFiles = [];
 appClientFiles.push('app_client/js/app.js');
