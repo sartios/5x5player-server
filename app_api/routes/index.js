@@ -3,6 +3,7 @@ var router = express.Router();
 var ctrlFields = require('../controllers/fields');
 var ctrlPlayers = require('../controllers/players');
 var ctrlTeams = require('../controllers/teams');
+var ctrlAuth = require('../controllers/authentication');
 
 
 /* Fields API */
@@ -30,6 +31,10 @@ router.put('/teams/:teamid/add-player', ctrlTeams.teamsAddPlayer);
 router.put('/teams/:teamid/remove-player', ctrlTeams.teamsRemovePlayer);
 router.delete('/teams', ctrlTeams.deleteAll);
 router.delete('/teams/:teamid', ctrlTeams.teamsDeleteOne);
+
+/* Authentication */
+router.post('/register', ctrlAuth.register);
+router.post('/login', ctrlAuth.login);
 
 
 module.exports = router;
