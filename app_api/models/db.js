@@ -40,3 +40,4 @@ process.on('SIGINT', function() {
 require('./fields');
 require('./players');
 require('./teams');
+require('./users');
