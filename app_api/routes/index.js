@@ -1,5 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var jwt = require('express-jwt');
+var auth = jwt({
+  secret: process.env.JWT_SECRET,
+  userProperty: 'payload'
+});
 var ctrlFields = require('../controllers/fields');
 var ctrlPlayers = require('../controllers/players');
 var ctrlTeams = require('../controllers/teams');
@@ -7,7 +12,7 @@ var ctrlAuth = require('../controllers/authentication');
 
 
 /* Fields API */
-router.get('/fields', ctrlFields.fieldsList);
+router.get('/fields', auth, ctrlFields.fieldsList);
 router.get('/fields/:fieldid', ctrlFields.fieldsReadOne);
 router.post('/fields', ctrlFields.fieldsCreate);
 router.put('/fields/:fieldid', ctrlFields.fieldsUpdateOne);
