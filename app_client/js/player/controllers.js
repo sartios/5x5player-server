@@ -41,7 +41,7 @@
                 $location.path('/players');
             }).error(function(data){
                 PlayerService.createMsg = {
-                    error: 'An error occurred during ' + vm.player.name + ' player create.'
+                    error: data.message
                 };
                 $location.path('/players');
             });
@@ -66,7 +66,7 @@
                 })
                 .error(function(data) {
                     PlayerService.updateMsg = {
-                        error: 'An error occurred during ' + vm.player._id + ' player update.'
+                        error: data.message
                     };
                     $location.path('/players');
                 });

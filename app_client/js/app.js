@@ -9,7 +9,9 @@
 
             $routeProvider.when('/', {
                 templateUrl: 'partials/home.html'
-            }).when('/teams', {
+            });
+
+            $routeProvider.when('/teams', {
                 templateUrl: 'partials/team/teams.html',
                 controller: 'TeamListController',
                 controllerAs: 'vm'
@@ -26,7 +28,9 @@
                 templateUrl: 'partials/team/create-team.html',
                 controller: 'TeamCreateController',
                 controllerAs: 'vm'
-            }).when('/players', {
+            });
+
+            $routeProvider.when('/players', {
                 templateUrl: 'partials/player/players.html',
                 controller: 'PlayerListController',
                 controllerAs: 'vm'
@@ -35,17 +39,37 @@
                 controller: 'PlayerEditController',
                 controllerAs: 'vm',
                 resolve: {
-                    playerId: ['$route', function($route){
+                    playerId: ['$route', function($route) {
                         return $route.current.params.playerid;
                     }],
                 }
-            }).when('/players/new',{
+            }).when('/players/new', {
                 templateUrl: 'partials/player/create-player.html',
                 controller: 'PlayerCreateController',
                 controllerAs: 'vm'
-            }).when('/home', {
+            });
+
+            $routeProvider.when('/fields', {
+                templateUrl: 'partials/field/fields.html',
+                controller: 'FieldListController',
+                controllerAs: 'vm'
+            }).when('/fields/edit/:fieldid', {
+                templateUrl: 'partials/field/edit-field.html',
+                controller: 'FieldEditController',
+                controllerAs: 'vm',
+                resolve: {
+                    fieldId: ['$route', function($route) {
+                        return $route.current.params.fieldid;
+                    }],
+                }
+            }).when('/fields/new', {
+                templateUrl: 'partials/field/create-field.html',
+                controller: 'FieldCreateController',
+                controllerAs: 'vm'
+            });
+
+            $routeProvider.when('/home', {
                 templateUrl: 'partials/home.html'
             }).otherwise('/home');
         });
-
 })();

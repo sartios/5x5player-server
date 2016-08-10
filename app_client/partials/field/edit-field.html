@@ -1,0 +1,15 @@
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label class="control-label" for="name">Name</label>
+    <input id="name" name="name" class="form-control" ng-model="vm.field.name"/>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="size">Size</label>
+    <input id="size" name="size" type="number" class="form-control" ng-model="vm.field.size"/>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="company">Company</label>
+    <input id="company" name="company" class="form-control" ng-disabled="true" ng-model="vm.field.company.name"/>
+  </div>
+  <button class="btn btn-primary" ng-click="vm.updateField()"> Update Player</button>
+</form>

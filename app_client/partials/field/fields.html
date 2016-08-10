@@ -1,0 +1,37 @@
+<success-generic success="vm.updateMsg.success"></success-generic>
+<success-generic success="vm.createMsg.success"></success-generic>
+<error-generic error="vm.updateMsg.error"></error-generic>
+<error-generic error="vm.createMsg.error"></error-generic>
+<error-generic error="vm.error"></error-generic>
+<div ng-if="vm.fields.length == 0">
+  <div class="alert alert-info">
+    There are not available fields
+  </div>
+</div>
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Size</th>
+        <th>Company</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="field in vm.fields">
+        <td>{{field.name}}</td>
+        <td>{{field.size}}</td>
+        <td>{{field.company.name}}</td>
+        <td>
+          <a href="#/fields/edit/{{field._id}}">
+            <span class="glyphicon glyphicon-edit"></span>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<a href="#/fields/new" class="pull-right">
+  <span class="btn btn-primary">Add Field</span>
+</a>

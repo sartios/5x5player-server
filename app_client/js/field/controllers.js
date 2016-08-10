@@ -1,73 +1,82 @@
-(function(){
-  'use strict';
+(function() {
+    'use strict';
+    /* jshint validthis: true */
 
-  angular.module('field')
-    .controller('FieldListController', ['$scope', function($scope){
+    angular.module('field')
+        .controller('FieldListController', listCtrl);
 
-      var init = function(){
-        $scope.fields = [{
-                id : 2,
-                name : 'A2',
-                company : {
-                    name : 'Company 1'
-                },
-                size : 12,
-                location : 'City 1, AA 111 BBB'
-            },{
-                id : 3,
-                name : 'A3',
-                company : {
-                    name : 'Company 1'
-                },
-                size : 22,
-                location : 'City 1, AA 111 BBB'
-            },{
-                id : 4,
-                name : 'A4',
-                company : {
-                    name : 'Company 1'
-                },
-                size : 16,
-                location : 'City 1, AA 111 BBB'
-            },{
-                id : 5,
-                name : 'A5',
-                company : {
-                    name : 'Company 1'
-                },
-                size : 12,
-                location : 'City 1, AA 111 BBB'
-            }];
-      };
-      init();
-    }]);
+    angular.module('field')
+        .controller('FieldEditController', editCtrl);
 
-  angular.module('field')
-    .controller('FieldCreateController', ['$scope', function($scope){
+    angular.module('field')
+        .controller('FieldCreateController', createCtrl);
 
-      $scope.addField = function(){
-        console.log($scope.field);
-      };
+    listCtrl.$inject = ['FieldService'];
 
-      var init = function(){};
-      init();
-    }]);
+    function listCtrl(FieldService) {
+        var vm = this;
+        var init = function() {
+            FieldService.getAllFields().success(function(data) {
+                vm.fields = data;
+            }).error(function(data) {});
 
-  angular.module('field')
-    .controller('FieldEditController', ['$scope', function($scope){
+            vm.createMsg = angular.copy(FieldService.createMsg);
+            vm.updateMsg = angular.copy(FieldService.updateMsg);
 
-      $scope.updateField = function(){
-        console.log($scope.field);
-      };
-
-      var init = function(){
-        $scope.field = {
-          name: 'Field name',
-          size: 12,
-          location: 'Field Location'
+            FieldService.createMsg = {};
+            FieldService.updateMsg = {};
         };
-      };
-      init();
-    }]);
+        init();
+    }
+
+    createCtrl.$inject = ['$location', 'FieldService'];
+
+    function createCtrl($location, FieldService) {
+        var vm = this;
+        vm.createField = function() {
+            console.log(vm.field);
+            FieldService.createField(vm.field).success(function(data) {
+                FieldService.createMsg = {
+                    success: 'Field with id ' + data._id + ' has been successfully created.'
+                };
+                $location.path('/fields');
+            }).error(function(data) {
+                FieldService.createMsg = {
+                    error: data.message
+                };
+                $location.path('/fields');
+            });
+        };
+
+        var init = function() {};
+        init();
+    }
+
+    editCtrl.$inject = ['fieldId', '$location', 'FieldService'];
+
+    function editCtrl(fieldId, $location, FieldService) {
+        var vm = this;
+        vm.updateField = function() {
+            console.log(vm.field);
+            FieldService.updateField(vm.field).success(function(data) {
+                FieldService.updateMsg = {
+                    success: 'Field with id ' + data._id + ' has been successfully updated.'
+                };
+                $location.path('/fields');
+            }).error(function(data) {
+                FieldService.updateMsg = {
+                    error: data.message
+                };
+                $location.path('/fields');
+            });
+        };
+
+        var init = function() {
+            FieldService.getFieldById(fieldId).success(function(data) {
+                vm.field = data;
+            }).error(function(data) {});
+        };
+        init();
+    }
 
 })();

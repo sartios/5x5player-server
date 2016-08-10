@@ -23,7 +23,7 @@ function listCtrl($scope, TeamService) {
         console.log('Found ' + vm.teams.length + ' teams');
       })
       .error(function(data){
-        vm.error = 'An error occured during teams fetching';
+        vm.error = data.message;
       });
 
       vm.updateMsg = angular.copy(TeamService.updateMsg);
@@ -47,7 +47,7 @@ function createCtrl(TeamService, $location) {
         $location.path('/teams');
       })
       .error(function(data){
-        TeamService.createMsg = {error: 'An error occured during team creation'};
+        TeamService.createMsg = {error: data.message};
         $location.path('/teams');
       });
     };
@@ -68,7 +68,7 @@ function editCtrl(teamId, $location, TeamService) {
         $location.path('/teams');
       })
       .error(function(data){
-        TeamService.updateMsg = {error: 'An error occured during team ' + teamId + ' update process'};
+        TeamService.updateMsg = {error: data.message};
         $location.path('/teams');
       });
     };
