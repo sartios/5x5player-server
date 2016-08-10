@@ -8,7 +8,9 @@
         .config(function($routeProvider, $locationProvider) {
 
             $routeProvider.when('/', {
-                templateUrl: 'partials/home.html'
+                templateUrl: 'partials/home.html',
+                controller: 'HomeController',
+                controllerAs: 'vm'
             });
 
             $routeProvider.when('/teams', {
@@ -69,7 +71,9 @@
             });
 
             $routeProvider.when('/home', {
-                templateUrl: 'partials/home.html'
+                templateUrl: 'partials/home.html',
+                controller: 'HomeController',
+                controllerAs: 'vm'
             }).otherwise('/home');
         });
 })();
