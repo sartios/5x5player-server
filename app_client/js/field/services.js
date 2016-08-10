@@ -25,6 +25,10 @@
             return $http.get('/api/fields/' + fieldId);
         };
 
+        service.deleteField = function(fieldId){
+            return $http.delete('/api/fields/' + fieldId);
+        };
+
         service.createMsg = {};
         service.updateMsg = {};
 

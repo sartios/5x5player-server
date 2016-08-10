@@ -15,10 +15,25 @@
 
     function listCtrl(FieldService) {
         var vm = this;
-        var init = function() {
+
+        vm.deleteField = function(fieldid){
+            FieldService.deleteField(fieldid).success(function(data){
+                vm.deleteMsg = {success: 'Field with id ' + fieldid + ' has been deleted successfully'};
+                intFields();
+            }).error(function(data){
+                vm.deleteMsg = {error: data.message};
+            });
+        };
+
+        var intFields = function(){
             FieldService.getAllFields().success(function(data) {
                 vm.fields = data;
+                vm.total = vm.fields.length;
             }).error(function(data) {});
+        };
+
+        var init = function() {
+            intFields();
 
             vm.createMsg = angular.copy(FieldService.createMsg);
             vm.updateMsg = angular.copy(FieldService.updateMsg);

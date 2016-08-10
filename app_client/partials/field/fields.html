@@ -27,11 +27,15 @@
           <a href="#/fields/edit/{{field._id}}">
             <span class="glyphicon glyphicon-edit"></span>
           </a>
+          <a href="#/fields" ng-click="vm.deleteField(field._id)">
+            <span class="glyphicon glyphicon-remove"></span>
+          </a>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+<show-results results="vm.total"></show-results>
 <a href="#/fields/new" class="pull-right">
   <span class="btn btn-primary">Add Field</span>
 </a>

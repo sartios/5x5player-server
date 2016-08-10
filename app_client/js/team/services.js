@@ -22,6 +22,10 @@
         return $http.put('/api/teams/' + team._id, team);
       };
 
+      service.deleteTeam = function(teamid){
+        return $http.delete('/api/teams/' + teamid);
+      };
+
       service.createMsg = {};
       service.updateMsg = {};
 

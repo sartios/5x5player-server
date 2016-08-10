@@ -21,6 +21,10 @@
                 return $http.post('/api/players', player);
             };
 
+            service.deletePlayer = function(playerid){
+                return $http.delete('/api/players/' + playerid);
+            };
+
             service.createMsg = {};
             service.updateMsg = {};
 

@@ -14,10 +14,25 @@
     function listCtrl(PlayerService) {
         var vm = this;
         vm.players = [];
-        var init = function() {
+
+        vm.deletePlayer = function(playerid){
+            PlayerService.deletePlayer(playerid).success(function(data){
+                vm.deleteMsg = {success: 'Player with id ' + playerid + ' has been deleted successfully'};
+                initPlayers();
+            }).error(function(data){
+                vm.deleteMsg = {error: data.message};
+            });
+        };
+
+        var initPlayers = function(){
             PlayerService.getAllPlayers().success(function(data) {
                 vm.players = data;
+                vm.total = vm.players.length
             }).error(function(data) {});
+        };
+
+        var init = function() {
+            initPlayers();
 
             vm.createMsg = angular.copy(PlayerService.createMsg);
             vm.updateMsg = angular.copy(PlayerService.updateMsg);

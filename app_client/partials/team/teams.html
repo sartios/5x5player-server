@@ -1,7 +1,9 @@
 <success-generic success="vm.updateMsg.success"></success-generic>
+<success-generic success="vm.deleteMsg.success"></success-generic>
 <success-generic success="vm.createMsg.success"></success-generic>
 <error-generic error="vm.updateMsg.error"></error-generic>
 <error-generic error="vm.createMsg.error"></error-generic>
+<error-generic error="vm.deleteMsg.error"></error-generic>
 <error-generic error="vm.error"></error-generic>
 <div ng-if="vm.teams == 0">
   <div class="alert alert-info">There are no teams available</div>
@@ -27,11 +29,15 @@
           <a href="#/teams/edit/{{team._id}}">
             <span class="glyphicon glyphicon-edit"></span>
           </a>
+          <a href="#/teams" ng-click="vm.deleteTeam(team._id)">
+            <span class="glyphicon glyphicon-remove"></span>
+          </a>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+<show-results results="vm.total"></show-results>
 <a href="#/teams/new" class="pull-right">
   <span class="btn btn-primary">Add Team</span>
 </a>

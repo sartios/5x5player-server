@@ -15,17 +15,30 @@ listCtrl.$inject = ['$scope','TeamService'];
 
 function listCtrl($scope, TeamService) {
     var vm = this;
-    var init = function() {
+
+    vm.deleteTeam = function(teamid){
+      TeamService.deleteTeam(teamid).success(function(data){
+        vm.deleteMsg = {success: 'Team with id ' + teamid + ' has been deleted successfully'};
+        initTeams();
+      }).error(function(data){
+        vm.deleteMsg = {error: data.message};
+      });
+    };
+
+    var initTeams = function(){
       vm.teams = [];
       TeamService.getAllTeams()
       .success(function(data){
         vm.teams = data;
-        console.log('Found ' + vm.teams.length + ' teams');
+        vm.total = vm.teams.length;
       })
       .error(function(data){
         vm.error = data.message;
       });
+    };
 
+    var init = function() {
+      initTeams();
       vm.updateMsg = angular.copy(TeamService.updateMsg);
       vm.createMsg = angular.copy(TeamService.createMsg);
       TeamService.updateMsg = {};
