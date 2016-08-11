@@ -1,23 +1,44 @@
-<form class="form-horizontal" role="form">
-  <div class="form-group">
-    <label class="control-label" for="name">Name</label>
-    <input id="name" name="name" class="form-control" ng-model="vm.player.name"/>
-  </div>
-  <div class="form-group">
-    <label class="control-label" for="position">Position</label>
-    <select id="position" class="form-control" ng-model="vm.player.position">
-      <option value="Defense">Defense</option>
-      <option value="Offense">Offense</option>
-      <option value="Goalkeeper">Goalkeeper</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label class="control-label" for="number">Number</label>
-    <input id="number" class="form-control" name="number" ng-model="vm.player.number"/>
-  </div>
-  <div class="form-group">
-    <label class="control-label" for="days">Days</label>
-    <input id="days" class="form-control" name="days" type="textarea" ng-model="vm.player.days"/>
-  </div>
-  <button class="btn btn-primary" ng-click="vm.createPlayer()"> Update Player</button>
-</form>
+<navigation-generic></navigation-generic>
+
+<div class="row">
+    <div class="container-fluid">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div id="page-content">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="control-label" for="name">Name</label>
+                                <input id="name" name="name" class="form-control" ng-model="vm.player.name"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="position">Position</label>
+                                <select id="position" class="form-control" ng-model="vm.player.position">
+                                    <option value="Defense">Defense</option>
+                                    <option value="Offense">Offense</option>
+                                    <option value="Goalkeeper">Goalkeeper</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="number">Number</label>
+                                <input id="number" class="form-control" name="number" ng-model="vm.player.number"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="days">Days</label>
+                                <input id="days" class="form-control" name="days" type="textarea" ng-model="vm.player.days"/>
+                            </div>
+                            <button class="btn btn-primary" ng-click="vm.createPlayer()">
+                                Update Player</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+</div>
+
+<footer-generic></footer-generic>

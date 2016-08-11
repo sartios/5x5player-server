@@ -9,21 +9,7 @@
       <link href="/stylesheets/style.css" rel="stylesheet" />
       <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   </head>
-  <body>
-
-    <navigation-generic></navigation-generic>
-
-    <div class="row">
-      <div class="container-fluid">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-6">
-          <div id="page-content" ng-view></div>
-        </div>
-        <div class="col-sm-3"></div>
-      </div>
-    </div>
-
-    <footer-generic></footer-generic>
+  <body ng-view>   
 
     <script src="/angular/angular.min.js"></script>
     <script src="/lib/angular-route.min.js"></script>
