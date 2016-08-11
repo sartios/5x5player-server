@@ -7,7 +7,8 @@
   function navigationGeneric(){
     return {
       restrict: 'EA',
-      templateUrl: 'partials/common/navigationGeneric.html'
+      templateUrl: 'partials/common/navigationGeneric.html',
+      controller: 'NavigationController as navvm'
     };
   }
 })();

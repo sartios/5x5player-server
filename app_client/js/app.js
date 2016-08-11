@@ -70,6 +70,16 @@
                 controllerAs: 'vm'
             });
 
+            $routeProvider.when('/register',{
+                templateUrl: 'partials/auth/register.html',
+                controller: 'RegisterController',
+                controllerAs: 'vm'
+            }).when('/login', {
+                templateUrl: 'partials/auth/login.html',
+                controller: 'LoginController',
+                controllerAs: 'vm'
+            });
+
             $routeProvider.when('/home', {
                 templateUrl: 'partials/home.html',
                 controller: 'HomeController',

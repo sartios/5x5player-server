@@ -4,13 +4,17 @@
     angular.module('field')
         .factory('FieldService', fieldService);
 
-    fieldService.$inject = ['$http'];
+    fieldService.$inject = ['$http', 'AuthenticationService'];
 
-    function fieldService($http) {
+    function fieldService($http, AuthenticationService) {
         var service = {};
 
         service.getAllFields = function() {
-            return $http.get('/api/fields');
+            return $http.get('/api/fields', {
+                headers:{
+                    Authorization : 'Bearer ' + AuthenticationService.getToken()
+                }
+            });
         };
 
         service.updateField = function(field) {
