@@ -8,12 +8,31 @@ var apiOptions = {
 
 describe('Teams API', function() {
 
+    beforeEach(function(done){
+        var requestOptions = {
+            url: apiOptions.server + '/api/login',
+            method: 'POST',
+            json: {
+                email: 'sartios@hotmail.com',
+                password: 'pa55w0rd'
+            },
+            qs: {}
+        };
+        request(requestOptions, function(err, response, body){
+            apiOptions.token = body.token;
+            done();
+        });
+    });
+
     beforeEach(function(done) {
         var requestOptions = {
             url: apiOptions.server + '/api/teams',
             method: 'DELETE',
             json: {},
-            qs: {}
+            qs: {},
+            headers:{
+                authorization: 'Bearer ' + apiOptions.token
+            }
         };
         request(requestOptions, function(err, response, body) {
             expect(response.statusCode).to.equal(204);
@@ -35,7 +54,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/players',
                 method: 'POST',
                 json: player,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -61,7 +83,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'POST',
                 json: team,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -93,7 +118,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'POST',
                 json: team,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -125,7 +153,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'POST',
                 json: team,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(404);
@@ -147,7 +178,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'POST',
                 json: team,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(404);
@@ -163,7 +197,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'GET',
                 json: {},
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(body).to.deep.equal([]);
@@ -185,7 +222,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'POST',
                 json: team,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
 
             request(requestOptions, function(err, response, body) {
@@ -199,7 +239,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'GET',
                 json: {},
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
 
             request(requestOptions, function(err, response, body) {
@@ -226,7 +269,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'POST',
                 json: team,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -242,7 +288,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + team._id,
                 method: 'GET',
                 json: {},
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
 
             request(requestOptions, function(err, response, body) {
@@ -264,7 +313,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/team-id-does-not-exist',
                 method: 'GET',
                 json: {},
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(404);
@@ -289,7 +341,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'POST',
                 json: team,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -308,7 +363,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + team._id,
                 method: 'PUT',
                 json: team,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -325,7 +383,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/',
                 method: 'PUT',
                 json: {},
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(404);
@@ -339,7 +400,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + team._id,
                 method: 'PUT',
                 json: team,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(404);
@@ -364,7 +428,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'POST',
                 json: team,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -380,7 +447,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/players',
                 method: 'POST',
                 json: player,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -397,7 +467,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + team._id + '/add-player',
                 method: 'PUT',
                 json: options,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -414,7 +487,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + team._id + '/add-player',
                 method: 'PUT',
                 json: options,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(404);
@@ -431,7 +507,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + team._id + '/add-player',
                 method: 'PUT',
                 json: options,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -447,7 +526,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + team._id + '/add-player',
                 method: 'PUT',
                 json: options,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -470,7 +552,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/players',
                 method: 'POST',
                 json: player,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -493,7 +578,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'POST',
                 json: team,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -510,7 +598,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + team._id + '/remove-player',
                 method: 'PUT',
                 json: options,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -527,7 +618,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + team._id + '/remove-player',
                 method: 'PUT',
                 json: options,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -544,7 +638,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + '' + '/remove-player',
                 method: 'PUT',
                 json: options,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(404);
@@ -561,7 +658,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + options.playerid + '/remove-player',
                 method: 'PUT',
                 json: options,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(404);
@@ -587,7 +687,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'POST',
                 json: team,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -600,7 +703,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + "/api/teams",
                 method: 'GET',
                 json: {},
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -614,7 +720,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'DELETE',
                 json: {},
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(204);
@@ -624,7 +733,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'GET',
                 json: {},
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -655,7 +767,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams',
                 method: 'POST',
                 json: team,
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(200);
@@ -669,7 +784,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + team._id,
                 method: 'DELETE',
                 json: {},
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(204);
@@ -679,7 +797,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + team._id,
                 method: 'GET',
                 json: {},
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(404);
@@ -693,7 +814,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + teamId,
                 method: 'DELETE',
                 json: {},
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(404);
@@ -707,7 +831,10 @@ describe('Teams API', function() {
                 url: apiOptions.server + '/api/teams/' + teamId,
                 method: 'DELETE',
                 json: {},
-                qs: {}
+                qs: {},
+                headers:{
+                    authorization: 'Bearer ' + apiOptions.token
+                }
             };
             request(requestOptions, function(err, response, body) {
                 expect(response.statusCode).to.equal(404);

@@ -1,10 +1,27 @@
 var expect = require("chai").expect;
 var request = require('request');
 var apiOptions = {
-  server: "http://localhost:3000"
+  server: "http://localhost:3000",
 };
 
 describe('Fields API', function(){
+
+  beforeEach(function(done){
+    var requestOptions = {
+      url: apiOptions.server + '/api/login',
+      method: 'POST',
+      json:{
+        email: 'sartios@hotmail.com',
+        password: 'pa55w0rd'
+      },
+      qs: {}
+    };
+
+    request(requestOptions, function(err, response, body){
+      apiOptions.token = body.token;
+      done();
+    });
+  });
 
   describe('GET /api/fields', function(){
     it('should return all fields', function(done){
@@ -12,7 +29,10 @@ describe('Fields API', function(){
         url: apiOptions.server + '/api/fields',
         method: "GET",
         json: {},
-        qs:{}
+        qs:{},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
           expect(response.statusCode).to.equal(200);
@@ -33,7 +53,10 @@ describe('Fields API', function(){
         url: apiOptions.server + '/api/fields',
         method: "POST",
         json: postdata,
-        qs:{}
+        qs:{},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
@@ -60,7 +83,10 @@ describe('Fields API', function(){
         url: apiOptions.server + '/api/fields',
         method: "POST",
         json: postdata,
-        qs:{}
+        qs:{},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         field = body;
@@ -77,7 +103,10 @@ describe('Fields API', function(){
         url: apiOptions.server + '/api/fields/' + field._id,
         method: "PUT",
         json: postdata,
-        qs:{}
+        qs:{},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
@@ -103,7 +132,10 @@ describe('Fields API', function(){
         url: apiOptions.server + '/api/fields',
         method: "POST",
         json: postdata,
-        qs:{}
+        qs:{},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         field = body;
@@ -113,7 +145,10 @@ describe('Fields API', function(){
         url: apiOptions.server + '/api/fields',
         method: "GET",
         json: {},
-        qs:{}
+        qs:{},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
@@ -127,7 +162,10 @@ describe('Fields API', function(){
         url: apiOptions.server + '/api/fields/' + field._id,
         method: "DELETE",
         json: {},
-        qs:{}
+        qs:{},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(204);
@@ -137,7 +175,10 @@ describe('Fields API', function(){
         url: apiOptions.server + '/api/fields',
         method: "GET",
         json: {},
-        qs:{}
+        qs:{},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         var actualCount = body.length;

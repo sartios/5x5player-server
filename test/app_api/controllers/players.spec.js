@@ -8,10 +8,30 @@ describe('Players API', function(){
 
   beforeEach(function(done){
     var requestOptions = {
+      url: apiOptions.server + '/api/login',
+      method: 'POST',
+      json: {
+        email: 'sartios@hotmail.com',
+        password: 'pa55w0rd'
+      },
+      qs: {}
+    };
+
+    request(requestOptions, function(err, response, body){
+      apiOptions.token = body.token;
+      done();
+    });
+  });
+
+  beforeEach(function(done){
+    var requestOptions = {
       url: apiOptions.server + '/api/players',
       method: 'DELETE',
       json: {},
-      qs: {}
+      qs: {},
+      headers:{
+        authorization: 'Bearer ' + apiOptions.token
+      }
     };
 
     request(requestOptions, function(err, response, body){
@@ -36,7 +56,10 @@ describe('Players API', function(){
         url: apiOptions.server + '/api/players',
         method: 'POST',
         json: player,
-        qs: {}
+        qs: {},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         player = body;
@@ -49,7 +72,10 @@ describe('Players API', function(){
         url: apiOptions.server + '/api/players',
         method: 'GET',
         json: {},
-        qs: {}
+        qs: {},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
@@ -82,7 +108,10 @@ describe('Players API', function(){
         url: apiOptions.server + '/api/players',
         method: 'POST',
         json: player,
-        qs: {}
+        qs: {},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         player = body;
@@ -95,7 +124,10 @@ describe('Players API', function(){
         url: apiOptions.server + '/api/players/' + player._id,
         method: 'GET',
         json: {},
-        qs: {}
+        qs: {},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
@@ -126,7 +158,10 @@ describe('Players API', function(){
         url: apiOptions.server + '/api/players',
         method: 'POST',
         json: player,
-        qs: {}
+        qs: {},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         player = body;
@@ -159,7 +194,10 @@ describe('Players API', function(){
         url: apiOptions.server + '/api/players',
         method: 'POST',
         json: player,
-        qs: {}
+        qs: {},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         player = body;
@@ -177,7 +215,10 @@ describe('Players API', function(){
         url: apiOptions.server + '/api/players/' + player._id,
         method: 'PUT',
         json: putdata,
-        qs: {}
+        qs: {},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
@@ -207,7 +248,10 @@ describe('Players API', function(){
         url: apiOptions.server + '/api/players',
         method: 'POST',
         json: player,
-        qs: {}
+        qs: {},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         player = body;
@@ -220,7 +264,10 @@ describe('Players API', function(){
         url: apiOptions.server + '/api/players/' + player._id,
         method: 'DELETE',
         json: {},
-        qs: {}
+        qs: {},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(204);
@@ -229,7 +276,10 @@ describe('Players API', function(){
         url: apiOptions.server + '/api/players/' + player._id,
         method: 'GET',
         json: {},
-        qs: {}
+        qs: {},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
       };
       request(requestOptions, function(err, response, body){
         expect(body.message).to.equal("playerid not found");
