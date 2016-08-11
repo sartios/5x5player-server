@@ -11,9 +11,9 @@
     angular.module('team')
         .controller('TeamEditController', editCtrl);
 
-    listCtrl.$inject = ['$scope', 'TeamService'];
+    listCtrl.$inject = ['$scope', 'TeamService', 'AuthenticationService'];
 
-    function listCtrl($scope, TeamService) {
+    function listCtrl($scope, TeamService, AuthenticationService) {
         var vm = this;
 
         vm.deleteTeam = function(teamid) {
@@ -42,6 +42,10 @@
             });
         };
 
+        var setLoggedIn = function() {
+            vm.isLoggedIn = AuthenticationService.isLoggedIn();
+        };
+
         var initTeams = function() {
             vm.teams = [];
             TeamService.getAllTeams()
@@ -55,6 +59,7 @@
         };
 
         var init = function() {
+            setLoggedIn();
             initTeams();
             vm.updateMsg = angular.copy(TeamService.updateMsg);
             vm.createMsg = angular.copy(TeamService.createMsg);
@@ -64,9 +69,9 @@
         init();
     }
 
-    createCtrl.$inject = ['TeamService', '$location'];
+    createCtrl.$inject = ['$location', 'TeamService', 'AuthenticationService'];
 
-    function createCtrl(TeamService, $location) {
+    function createCtrl($location, TeamService, AuthenticationService) {
         var vm = this;
 
         vm.addTeam = function() {
@@ -86,13 +91,18 @@
                 });
         };
 
-        var init = function() {};
+        var init = function() {
+            if (!AuthenticationService.isLoggedIn()) {
+                $location.search('page', '/teams/new');
+                $location.path('/login');
+            }
+        };
         init();
     }
 
-    editCtrl.$inject = ['teamId', '$location', 'TeamService'];
+    editCtrl.$inject = ['teamId', '$location', 'TeamService', 'AuthenticationService'];
 
-    function editCtrl(teamId, $location, TeamService) {
+    function editCtrl(teamId, $location, TeamService, AuthenticationService) {
         var vm = this;
         vm.updateTeam = function() {
             console.log(vm.team);
@@ -112,6 +122,11 @@
         };
 
         var init = function() {
+            if (!AuthenticationService.isLoggedIn()) {
+                $location.search('page', '/teams/edit/' + teamId);
+                $location.path('/login');
+                return;
+            }
             TeamService.getTeamById(teamId)
                 .success(function(data) {
                     vm.team = data;
