@@ -825,7 +825,7 @@ describe('Teams API', function() {
             });
         });
 
-        it('should return 404 when teamid does not exist', function(done) {
+        it('should delete all teams when teamid does not exist', function(done) {
             var teamId = '';
             requestOptions = {
                 url: apiOptions.server + '/api/teams/' + teamId,
@@ -837,7 +837,7 @@ describe('Teams API', function() {
                 }
             };
             request(requestOptions, function(err, response, body) {
-                expect(response.statusCode).to.equal(404);
+                expect(response.statusCode).to.equal(204);
                 done();
             });
         });

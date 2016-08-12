@@ -41,3 +41,4 @@ require('./fields');
 require('./players');
 require('./teams');
 require('./users');
+require('./opponentRequests');
