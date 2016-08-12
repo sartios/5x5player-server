@@ -7,73 +7,28 @@ var apiOptions = {
 };
 
 describe('OpponentRequest API', function(){
-  var team, field, requestOptions, opponentRequest;
+  var team, field, requestOptions, opponentRequest,
+  initDeleteAllRequest,
+  initGetAllRequest,
+  initPutRequest,
+  initDeleteOneRequest,
+  initPostRequest,
+  initGetOneRequest,
+  login, createTeam, createField;
 
   // Login
   beforeEach(function(done){
-    requestOptions = {
-      url: apiOptions.server + '/api/login',
-      method: 'POST',
-      json: {
-        email: 'sartios@hotmail.com',
-        password: 'pa55w0rd'
-      },
-      qs: {}
-    };
-    request(requestOptions, function(err, response, body){
-      apiOptions.token = body.token;
-      done();
-    });
+    login(done);
   });
 
   // POST Team
   beforeEach(function(done){
-    team = {
-      name: 'Team 1',
-      players: [],
-      city: {
-        city: 'Thessaloniki',
-        coords: [50, 60]
-      },
-      level: 'Beginner'
-    };
-    requestOptions = {
-      url: apiOptions.server + '/api/teams',
-      method: 'POST',
-      json: team,
-      qs: {},
-      headers: {
-        authorization: 'Bearer ' + apiOptions.token
-      }
-    };
-    request(requestOptions, function(err, response, body){
-      team._id = body._id;
-      team.modifiedOn = body.modifiedOn;
-      team.createOn = body.createOn;
-      done();
-    });
+    createTeam(done);
   });
 
   // POST Field
   beforeEach(function(done){
-    field = {
-      name: 'Field 1',
-      company: 'Company 1',
-      size: 12
-    };
-    requestOptions = {
-      url: apiOptions.server + '/api/fields',
-      method: 'POST',
-      json: field,
-      qs: {},
-      headers: {
-        authorization: 'Bearer ' + apiOptions.token
-      }
-    };
-    request(requestOptions, function(err, response, body){
-      field._id = body._id;
-      done();
-    });
+    createField(done);
   });
 
   describe('POST /api/opponent-requests',function(){
@@ -83,15 +38,7 @@ describe('OpponentRequest API', function(){
         field: field,
         date: new Date()
       };
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'POST',
-        json: opponentRequest,
-        qs: {},
-        headers: {
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initPostRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
         expect(body._id).not.to.be.undefined;
@@ -105,12 +52,8 @@ describe('OpponentRequest API', function(){
         field: field,
         date: new Date()
       };
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'POST',
-        json: opponentRequest,
-        qs: {}
-      };
+      initPostRequest();
+      delete requestOptions.headers;
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(401);
         done();
@@ -124,15 +67,7 @@ describe('OpponentRequest API', function(){
         field: field,
         date: new Date()
       };
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'POST',
-        json: opponentRequest,
-        qs: {},
-        headers: {
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initPostRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(404);
         done();
@@ -144,15 +79,7 @@ describe('OpponentRequest API', function(){
         field: field,
         date: new Date()
       };
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'POST',
-        json: opponentRequest,
-        qs: {},
-        headers: {
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initPostRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(404);
         done();
@@ -166,15 +93,7 @@ describe('OpponentRequest API', function(){
         field: field,
         date: new Date()
       };
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'POST',
-        json: opponentRequest,
-        qs: {},
-        headers: {
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initPostRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(404);
         done();
@@ -186,15 +105,7 @@ describe('OpponentRequest API', function(){
         team: team,
         date: new Date()
       };
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'POST',
-        json: opponentRequest,
-        qs: {},
-        headers: {
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initPostRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(404);
         done();
@@ -207,12 +118,8 @@ describe('OpponentRequest API', function(){
         field: field,
         date: new Date()
       };
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'POST',
-        json: opponentRequest,
-        qs: {}
-      };
+      initPostRequest();
+      delete requestOptions.headers;
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(401);
         done();
@@ -228,15 +135,7 @@ describe('OpponentRequest API', function(){
         field: field,
         date: new Date()
       };
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'POST',
-        json: opponentRequest,
-        qs: {},
-        headers: {
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initPostRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
         opponentRequest._id = body._id;
@@ -247,15 +146,7 @@ describe('OpponentRequest API', function(){
     });
 
     it('should return an opponent request', function(done){
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests/' + opponentRequest._id,
-        method: 'GET',
-        json: {},
-        qs: {},
-        headers:{
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initGetOneRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
         expect(opponentRequest._id).to.equal(body._id);
@@ -269,12 +160,8 @@ describe('OpponentRequest API', function(){
     });
 
     it('should return 401 for unathenticated users', function(done){
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests/' + opponentRequest._id,
-        method: 'GET',
-        json: {},
-        qs: {}
-      };
+      initGetOneRequest();
+      delete requestOptions.headers;
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(401);
         done();
@@ -282,16 +169,8 @@ describe('OpponentRequest API', function(){
     });
 
     it('should 404 when request id does not belong to a request', function(done){
-      var requestId = new ObjectId();
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests/' + requestId,
-        method: 'GET',
-        json: {},
-        qs: {},
-        headers:{
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initGetOneRequest();
+      requestOptions.url =  apiOptions.server + '/api/opponent-requests/' + new ObjectId();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(404);
         done();
@@ -299,16 +178,8 @@ describe('OpponentRequest API', function(){
     });
 
     it('should all requests when request id does not exist', function(done){
-      var requestId = '';
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests/' + requestId,
-        method: 'GET',
-        json: {},
-        qs: {},
-        headers:{
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initGetOneRequest();
+      requestOptions.url =  apiOptions.server + '/api/opponent-requests/';
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
         expect(body.length).to.not.be.empty;
@@ -317,7 +188,7 @@ describe('OpponentRequest API', function(){
     });
   });
 
-  describe('PUT /opponent-requests/:requestId', function(done){
+  describe('PUT /api/opponent-requests/:requestId', function(done){
     var updateField;
     beforeEach(function(done){
       opponentRequest = {
@@ -325,15 +196,7 @@ describe('OpponentRequest API', function(){
         field: field,
         date: new Date()
       };
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'POST',
-        json: opponentRequest,
-        qs: {},
-        headers: {
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initPostRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
         opponentRequest._id = body._id;
@@ -367,15 +230,7 @@ describe('OpponentRequest API', function(){
     it('should update the opponent request', function(done){
       opponentRequest.field = updateField;
       opponentRequest.date = new Date();
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests/' + opponentRequest._id,
-        method: 'PUT',
-        json: opponentRequest,
-        qs: {},
-        headers:{
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initPutRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
         expect(opponentRequest.field._id).to.equal(body.field);
@@ -389,12 +244,8 @@ describe('OpponentRequest API', function(){
     it('should return 401 for unauthenticated users', function(done){
       opponentRequest.field = updateField;
       opponentRequest.date = new Date();
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests/' + opponentRequest._id,
-        method: 'PUT',
-        json: opponentRequest,
-        qs: {}
-      };
+      initPutRequest();
+      delete requestOptions.headers;
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(401);
         done();
@@ -404,15 +255,7 @@ describe('OpponentRequest API', function(){
     it('should return 404 for opponent request without field', function(done){
       opponentRequest.field = '';
       opponentRequest.date = new Date();
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests/' + opponentRequest._id,
-        method: 'PUT',
-        json: opponentRequest,
-        qs: {},
-        headers:{
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initPutRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(404);
         done();
@@ -422,15 +265,7 @@ describe('OpponentRequest API', function(){
     it('should return 404 for opponent request without data', function(done){
       opponentRequest.field = updateField;
       opponentRequest.date = '';
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests/' + opponentRequest._id,
-        method: 'PUT',
-        json: opponentRequest,
-        qs: {},
-        headers:{
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initPutRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(404);
         done();
@@ -438,7 +273,7 @@ describe('OpponentRequest API', function(){
     });
   });
 
-  describe('DELETE /opponent-requests', function(){
+  describe('DELETE /api/opponent-requests', function(){
     var countRequests;
     beforeEach(function(done){
       opponentRequest = {
@@ -446,15 +281,7 @@ describe('OpponentRequest API', function(){
         field: field,
         date: new Date()
       };
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'POST',
-        json: opponentRequest,
-        qs: {},
-        headers: {
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initPostRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
         opponentRequest._id = body._id;
@@ -464,15 +291,7 @@ describe('OpponentRequest API', function(){
       });
     });
     beforeEach(function(done) {
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'GET',
-        json: {},
-        qs: {},
-        headers: {
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initGetAllRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
         countRequests = body.length;
@@ -482,28 +301,11 @@ describe('OpponentRequest API', function(){
     });
 
     it('should delete all opponent requests', function(done){
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'DELETE',
-        json: {},
-        qs: {},
-        headers: {
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initDeleteAllRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(204);
       });
-
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'GET',
-        json: {},
-        qs: {},
-        headers: {
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initGetAllRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
         expect(body.length).to.equal(0);
@@ -512,12 +314,8 @@ describe('OpponentRequest API', function(){
     });
 
     it('should return 401 for unathenticated users', function(done){
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'DELETE',
-        json: {},
-        qs: {}
-      };
+      initDeleteAllRequest();
+      delete requestOptions.headers;
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(401);
         done();
@@ -533,15 +331,7 @@ describe('OpponentRequest API', function(){
         field: field,
         date: new Date()
       };
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests',
-        method: 'POST',
-        json: opponentRequest,
-        qs: {},
-        headers: {
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initPostRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
         opponentRequest._id = body._id;
@@ -552,28 +342,11 @@ describe('OpponentRequest API', function(){
     });
 
     it('should delete the opponents request', function(done){
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests/' + opponentRequest._id,
-        method: 'DELETE',
-        json: {},
-        qs: {},
-        headers: {
-          authorization : "Bearer " + apiOptions.token
-        }
-      };
+      initDeleteOneRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(204);
       });
-
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests/' + opponentRequest._id,
-        method: 'GET',
-        json: {},
-        qs: {},
-        headers: {
-          authorization: 'Bearer ' + apiOptions.token
-        }
-      };
+      initGetOneRequest();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(404);
         done();
@@ -581,17 +354,153 @@ describe('OpponentRequest API', function(){
     });
 
     it('should return 401 for unauthorized users', function(done){
-      requestOptions = {
-        url: apiOptions.server + '/api/opponent-requests/' + opponentRequest._id,
-        method: 'DELETE',
-        json: {},
-        qs: {}
-      };
+      initDeleteOneRequest();
+      delete requestOptions.headers;
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(401);
         done();
       });
     });
   });
+
+  // Common methods
+
+  login = function(done){
+    requestOptions = {
+      url: apiOptions.server + '/api/login',
+      method: 'POST',
+      json: {
+        email: 'sartios@hotmail.com',
+        password: 'pa55w0rd'
+      },
+      qs: {}
+    };
+    request(requestOptions, function(err, response, body){
+      apiOptions.token = body.token;
+      done();
+    });
+  };
+
+  createTeam = function(done){
+    team = {
+      name: 'Team 1',
+      players: [],
+      city: {
+        city: 'Thessaloniki',
+        coords: [50, 60]
+      },
+      level: 'Beginner'
+    };
+    requestOptions = {
+      url: apiOptions.server + '/api/teams',
+      method: 'POST',
+      json: team,
+      qs: {},
+      headers: {
+        authorization: 'Bearer ' + apiOptions.token
+      }
+    };
+    request(requestOptions, function(err, response, body){
+      team._id = body._id;
+      team.modifiedOn = body.modifiedOn;
+      team.createOn = body.createOn;
+      done();
+    });
+  };
+
+  createField = function(done){
+    field = {
+      name: 'Field 1',
+      company: 'Company 1',
+      size: 12
+    };
+    requestOptions = {
+      url: apiOptions.server + '/api/fields',
+      method: 'POST',
+      json: field,
+      qs: {},
+      headers: {
+        authorization: 'Bearer ' + apiOptions.token
+      }
+    };
+    request(requestOptions, function(err, response, body){
+      field._id = body._id;
+      done();
+    });
+  };
+
+  // Init requests sections
+
+  initDeleteAllRequest = function(){
+    requestOptions = {
+      url: apiOptions.server + '/api/opponent-requests',
+      method: 'DELETE',
+      json: {},
+      qs: {},
+      headers: {
+        authorization: 'Bearer ' + apiOptions.token
+      }
+    };
+  };
+
+  initGetAllRequest = function(){
+    requestOptions = {
+      url: apiOptions.server + '/api/opponent-requests',
+      method: 'GET',
+      json: {},
+      qs: {},
+      headers: {
+        authorization: 'Bearer ' + apiOptions.token
+      }
+    };
+  };
+
+  initPutRequest = function(){
+    requestOptions = {
+      url: apiOptions.server + '/api/opponent-requests/' + opponentRequest._id,
+      method: 'PUT',
+      json: opponentRequest,
+      qs: {},
+      headers:{
+        authorization: 'Bearer ' + apiOptions.token
+      }
+    };
+  };
+
+  initDeleteOneRequest = function(){
+    requestOptions = {
+      url: apiOptions.server + '/api/opponent-requests/' + opponentRequest._id,
+      method: 'DELETE',
+      json: {},
+      qs: {},
+      headers: {
+        authorization : "Bearer " + apiOptions.token
+      }
+    };
+  };
+
+  initPostRequest = function(){
+    requestOptions = {
+      url: apiOptions.server + '/api/opponent-requests',
+      method: 'POST',
+      json: opponentRequest,
+      qs: {},
+      headers: {
+        authorization: 'Bearer ' + apiOptions.token
+      }
+    };
+  };
+
+  initGetOneRequest = function(){
+    requestOptions = {
+      url: apiOptions.server + '/api/opponent-requests/' + opponentRequest._id,
+      method: 'GET',
+      json: {},
+      qs: {},
+      headers:{
+        authorization: 'Bearer ' + apiOptions.token
+      }
+    };
+  };
 
 });
