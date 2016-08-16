@@ -1,0 +1,23 @@
+<div class="modal-content">
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Field</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="field in vm.fields">
+          <td>
+            <input type="checkbox" ng-click="vm.toggleField(field)"/>
+          </td>
+          <td>
+            {{field.name}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-primary" ng-click="vm.close()">Close</button>
+</div>

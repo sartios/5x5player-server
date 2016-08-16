@@ -4,7 +4,9 @@
     angular.module('team', []);
     angular.module('player', []);
     angular.module('field', []);
-    angular.module('5x5playerApp', ['team', 'player', 'field', 'ngRoute'])
+    angular.module('app.requests', []);
+    angular.module('5x5playerApp', ['team', 'player', 'field', 'app.requests',
+     'ngRoute', 'ui.bootstrap'])
         .config(function($routeProvider, $locationProvider) {
 
             $routeProvider.when('/', {
@@ -77,6 +79,16 @@
             }).when('/login', {
                 templateUrl: 'partials/auth/login.html',
                 controller: 'LoginController',
+                controllerAs: 'vm'
+            });
+
+            $routeProvider.when('/requests', {
+                templateUrl: 'partials/requests/home.html',
+                controller: 'RequestsController',
+                controllerAs: 'vm'
+            }).when('/opponent-requests', {
+                templateUrl: 'partials/requests/opponent-requests.html',
+                controller: 'OpponentRequestsController',
                 controllerAs: 'vm'
             });
 
