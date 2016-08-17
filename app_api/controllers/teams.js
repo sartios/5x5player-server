@@ -50,7 +50,8 @@ var createTeam = function(req, res){
     name: req.body.name,
     players: req.body.players,
     city: req.body.city,
-    level: req.body.level
+    level: req.body.level,
+    user: req.payload
   }, function(err, team){
     if(err){
       console.log(err);

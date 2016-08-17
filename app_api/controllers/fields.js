@@ -23,7 +23,8 @@ module.exports.fieldsCreate = function(req, res){
   Field.create({
     name: req.body.name,
     company: {name: req.body.company},
-    size: req.body.size
+    size: req.body.size,
+    user : req.payload
   }, function(err, field){
     if(err){
       console.log(err);

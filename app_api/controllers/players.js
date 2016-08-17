@@ -27,7 +27,8 @@ module.exports.playersCreate = function(req, res){
       availableDays: {
         day: req.body.day,
         time: req.body.time
-      }
+      },
+      user: req.payload
   }, function(err, player){
     if(err){
       console.log(err);
