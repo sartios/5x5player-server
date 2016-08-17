@@ -13,7 +13,9 @@ var userSchema = new mongoose.Schema({
     required: true
   },
   hash: String,
-  salt: String
+  salt: String,
+  createOn: {type: Date, "default": Date.now},
+  modifiedOn: {type: Date, "default": Date.now}
 });
 
 userSchema.methods.setPassword = function(password){
