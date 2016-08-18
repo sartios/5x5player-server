@@ -24,10 +24,11 @@
       init();
   }
 
-  opponentReqCtrl.$inject = ['$modal', 'OpponentRequestService'];
+  opponentReqCtrl.$inject = ['$modal', 'OpponentRequestService', 'UserService'];
 
-  function opponentReqCtrl($modal, OpponentRequestService){
+  function opponentReqCtrl($modal, OpponentRequestService, UserService){
     var vm = this;
+    var teams = [];
 
     vm.openFields = function(){
       var dialog = $modal.open({
@@ -43,6 +44,9 @@
     };
 
     vm.createRequest = function(){
+      if(teams.length > 0){
+        vm.opponentReq.team = angular.copy(teams[0]);
+      }
       OpponentRequestService.createRequest(vm.opponentReq).success(function(data){
         console.log('Successful request creation', data);
       });
@@ -50,6 +54,9 @@
 
     var init = function(){
       vm.opponentReq = { field: {}, team: {}};
+      UserService.getTeams().success(function(data){
+        teams = data;
+      });
     };
     init();
   }
