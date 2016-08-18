@@ -18,6 +18,10 @@
             return $http.post('/api/opponent-requests', opponentRequest, config);
         };
 
+        service.getRequests = function(){
+            return $http.get('/api/opponent-requests', config);
+        };
+
         return service;
     }
 })();

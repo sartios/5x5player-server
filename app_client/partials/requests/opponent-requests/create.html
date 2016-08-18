@@ -1,0 +1,12 @@
+<form role="form" class="form-horizontal">
+  <div class="form-group">
+    <label class="control-label" for="date">Date</label>
+    <input type="text" id="date" ng-model="vm.opponentReq.date"/>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="field">Field</label>
+    <input type="text" id="field" ng-model="vm.opponentReq.field.name"/>
+    <span class="glyphicon glyphicon-search" ng-click="vm.openFields()"></span>
+  </div>
+  <button class="btn btn-default" ng-click="vm.createRequest()">Create</button>
+</form>

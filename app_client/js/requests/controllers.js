@@ -24,9 +24,9 @@
       init();
   }
 
-  opponentReqCtrl.$inject = ['$modal', 'OpponentRequestService', 'UserService'];
+  opponentReqCtrl.$inject = ['$route','$modal', 'OpponentRequestService', 'UserService'];
 
-  function opponentReqCtrl($modal, OpponentRequestService, UserService){
+  function opponentReqCtrl($route, $modal, OpponentRequestService, UserService){
     var vm = this;
     var teams = [];
 
@@ -48,15 +48,32 @@
         vm.opponentReq.team = angular.copy(teams[0]);
       }
       OpponentRequestService.createRequest(vm.opponentReq).success(function(data){
-        console.log('Successful request creation', data);
+        $route.reload();
+      });
+    };
+
+    var loadViews = function(){
+      vm.createView = 'partials/requests/opponent-requests/create.html';
+      vm.view = 'partials/requests/opponent-requests/list.html';
+    };
+
+    var loadRequests = function(){
+      OpponentRequestService.getRequests().success(function(data){
+        vm.requests = data;
+      });
+    };
+
+    var loadTeams = function(){
+      UserService.getTeams().success(function(data){
+        teams = data;
       });
     };
 
     var init = function(){
       vm.opponentReq = { field: {}, team: {}};
-      UserService.getTeams().success(function(data){
-        teams = data;
-      });
+      loadViews();
+      loadRequests();
+      loadTeams();
     };
     init();
   }

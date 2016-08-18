@@ -21,6 +21,20 @@ module.exports.opponentRequestsList = function(req, res){
   });
 };
 
+module.exports.opponentRequestsPopulateList = function(req, res){
+  OpponentRequest.find({})
+  .populate('team', 'name')
+  .populate('field', 'name')
+  .exec(function(err, result, stats){
+    if(err){
+      console.log('find opponent requests error', err);
+      sendJSONresponse(res, 404, err);
+    }else{
+      sendJSONresponse(res, 200, result);
+    }
+  });
+};
+
 module.exports.opponentRequestReadOne = function(req, res){
   console.log('opponentRequestReadOne()');
   if(req.params.requestid){

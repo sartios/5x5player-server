@@ -44,7 +44,7 @@ router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);
 
 /* OpponentRequest API */
-router.get('/opponent-requests', ctrlOpponentRequest.opponentRequestsList);
+router.get('/opponent-requests', ctrlOpponentRequest.opponentRequestsPopulateList);
 router.get('/opponent-requests/:requestid', auth, ctrlOpponentRequest.opponentRequestReadOne);
 router.post('/opponent-requests', auth, ctrlOpponentRequest.opponentRequestsCreate);
 router.put('/opponent-requests/:requestId', auth, ctrlOpponentRequest.opponentRequestsCreate);
