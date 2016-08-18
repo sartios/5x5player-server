@@ -2,36 +2,46 @@
     'use strict';
 
     angular.module('player')
-        .factory('PlayerService', ['$http', function($http) {
-            var service = {};
+        .factory('PlayerService', playerService);
 
-            service.getAllPlayers = function() {
-                return $http.get('/api/players');
-            };
+    playerService.$inject = ['$http', 'AuthenticationService'];
 
-            service.getPlayerById = function(playerId) {
-                return $http.get('/api/players/' + playerId);
-            };
+    function playerService($http, AuthenticationService) {
+        var service = {};
+        var config = {
+            headers: {
+                authorization: 'Bearer ' + AuthenticationService.getToken()
+            }
+        };
 
-            service.updatePlayer = function(player) {
-                return $http.put('/api/players/' + player._id, player);
-            };
+        service.getAllPlayers = function() {
+            return $http.get('/api/players', config);
+        };
 
-            service.createPlayer = function(player) {
-                return $http.post('/api/players', player);
-            };
+        service.getPlayerById = function(playerId) {
+            return $http.get('/api/players/' + playerId, config);
+        };
 
-            service.deletePlayer = function(playerid) {
-                return $http.delete('/api/players/' + playerid);
-            };
+        service.updatePlayer = function(player) {
+            return $http.put('/api/players/' + player._id, player, config);
+        };
 
-            service.deleteAll = function() {
-                return $http.delete('/api/players');
-            };
+        service.createPlayer = function(player) {
+            return $http.post('/api/players', player, config);
+        };
 
-            service.createMsg = {};
-            service.updateMsg = {};
+        service.deletePlayer = function(playerid) {
+            return $http.delete('/api/players/' + playerid, config);
+        };
 
-            return service;
-        }]);
+        service.deleteAll = function() {
+            return $http.delete('/api/players', config);
+        };
+
+        service.createMsg = {};
+        service.updateMsg = {};
+
+        return service;
+
+    }
 })();

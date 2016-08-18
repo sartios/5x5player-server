@@ -2,39 +2,47 @@
     'use strict';
 
     angular.module('team')
-        .factory('TeamService', ['$http', function($http) {
+        .factory('TeamService', teamService);
 
-            var service = {};
+    teamService.$inject = ['$http', 'AuthenticationService'];
 
-            service.getAllTeams = function() {
-                return $http.get('/api/teams');
-            };
+    function teamService($http, AuthenticationService) {
 
-            service.addTeam = function(team) {
-                return $http.post('/api/teams', team);
-            };
+        var service = {};
+        var config = {
+            headers:{
+                authorization: 'Bearer ' + AuthenticationService.getToken()
+            }
+        };
 
-            service.getTeamById = function(teamid) {
-                return $http.get('/api/teams/' + teamid);
-            };
+        service.getAllTeams = function() {
+            return $http.get('/api/teams', config);
+        };
 
-            service.updateTeam = function(team) {
-                return $http.put('/api/teams/' + team._id, team);
-            };
+        service.addTeam = function(team) {
+            return $http.post('/api/teams', team, config);
+        };
 
-            service.deleteTeam = function(teamid) {
-                return $http.delete('/api/teams/' + teamid);
-            };
+        service.getTeamById = function(teamid) {
+            return $http.get('/api/teams/' + teamid, config);
+        };
 
-            service.deleteAll = function() {
-                return $http.delete('/api/teams');
-            };
+        service.updateTeam = function(team) {
+            return $http.put('/api/teams/' + team._id, team, config);
+        };
 
-            service.createMsg = {};
-            service.updateMsg = {};
+        service.deleteTeam = function(teamid) {
+            return $http.delete('/api/teams/' + teamid, config);
+        };
 
+        service.deleteAll = function() {
+            return $http.delete('/api/teams', config);
+        };
 
-            return service;
-        }]);
+        service.createMsg = {};
+        service.updateMsg = {};
+
+        return service;
+    }
 
 })();
