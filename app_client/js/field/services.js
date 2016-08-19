@@ -4,7 +4,7 @@
     angular.module('field')
         .factory('FieldService', fieldService);
 
-    fieldService.$inject = ['$http', 'AuthenticationService'];
+
 
     function fieldService($http, AuthenticationService) {
         var service = {};
@@ -43,5 +43,7 @@
 
         return service;
     }
+
+    fieldService.$inject = ['$http', 'AuthenticationService'];
 
 })();

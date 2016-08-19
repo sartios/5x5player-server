@@ -4,7 +4,6 @@
     angular.module('app.requests')
         .factory('OpponentRequestService', opponentReqService);
 
-    opponentReqService.$inject = ['$http', 'AuthenticationService'];
 
     function opponentReqService($http, AuthenticationService) {
         var service = {};
@@ -24,4 +23,6 @@
 
         return service;
     }
+    opponentReqService.$inject = ['$http', 'AuthenticationService'];
+
 })();

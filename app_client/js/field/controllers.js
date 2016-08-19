@@ -11,7 +11,7 @@
     angular.module('field')
         .controller('FieldCreateController', createCtrl);
 
-    listCtrl.$inject = ['FieldService'];
+
 
     function listCtrl(FieldService) {
         var vm = this;
@@ -53,7 +53,7 @@
         init();
     }
 
-    createCtrl.$inject = ['$location', 'FieldService'];
+
 
     function createCtrl($location, FieldService) {
         var vm = this;
@@ -76,7 +76,7 @@
         init();
     }
 
-    editCtrl.$inject = ['fieldId', '$location', 'FieldService'];
+
 
     function editCtrl(fieldId, $location, FieldService) {
         var vm = this;
@@ -103,4 +103,7 @@
         init();
     }
 
+    listCtrl.$inject = ['FieldService'];
+createCtrl.$inject = ['$location', 'FieldService'];
+editCtrl.$inject = ['fieldId', '$location', 'FieldService'];
 })();

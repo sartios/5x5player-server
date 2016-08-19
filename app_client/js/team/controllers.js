@@ -11,7 +11,6 @@
     angular.module('team')
         .controller('TeamEditController', editCtrl);
 
-    listCtrl.$inject = ['$scope', 'TeamService', 'AuthenticationService'];
 
     function listCtrl($scope, TeamService, AuthenticationService) {
         var vm = this;
@@ -69,8 +68,6 @@
         init();
     }
 
-    createCtrl.$inject = ['$location', 'TeamService', 'AuthenticationService'];
-
     function createCtrl($location, TeamService, AuthenticationService) {
         var vm = this;
 
@@ -99,8 +96,6 @@
         };
         init();
     }
-
-    editCtrl.$inject = ['teamId', '$location', 'TeamService', 'AuthenticationService'];
 
     function editCtrl(teamId, $location, TeamService, AuthenticationService) {
         var vm = this;
@@ -137,5 +132,8 @@
         };
         init();
     }
-
+    listCtrl.$inject = ['$scope', 'TeamService', 'AuthenticationService'];
+    editCtrl.$inject = ['teamId', '$location', 'TeamService', 'AuthenticationService'];
+    createCtrl.$inject = ['$location', 'TeamService', 'AuthenticationService'];
+    
 })();

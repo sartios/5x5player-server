@@ -9,7 +9,7 @@
     angular.module('player')
         .controller('PlayerCreateController', createCtrl);
 
-    listCtrl.$inject = ['PlayerService'];
+
 
     function listCtrl(PlayerService) {
         var vm = this;
@@ -60,7 +60,7 @@
         init();
     }
 
-    createCtrl.$inject = ['$location', 'PlayerService'];
+
 
     function createCtrl($location, PlayerService) {
         var vm = this;
@@ -83,7 +83,7 @@
         init();
     }
 
-    editCtrl.$inject = ['playerId', '$location', 'PlayerService'];
+
 
     function editCtrl(playerId, $location, PlayerService) {
         var vm = this;
@@ -115,4 +115,8 @@
         };
         init();
     }
+
+    listCtrl.$inject = ['PlayerService'];
+    createCtrl.$inject = ['$location', 'PlayerService'];
+    editCtrl.$inject = ['playerId', '$location', 'PlayerService'];
 })();

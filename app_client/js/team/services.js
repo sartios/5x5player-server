@@ -4,7 +4,6 @@
     angular.module('team')
         .factory('TeamService', teamService);
 
-    teamService.$inject = ['$http', 'AuthenticationService'];
 
     function teamService($http, AuthenticationService) {
 
@@ -44,5 +43,7 @@
 
         return service;
     }
+
+    teamService.$inject = ['$http', 'AuthenticationService'];
 
 })();

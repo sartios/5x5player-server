@@ -7,7 +7,8 @@
     angular.module('app.requests', []);
     angular.module('5x5playerApp', ['team', 'player', 'field', 'app.requests',
      'ngRoute', 'ui.bootstrap'])
-        .config(function($routeProvider, $locationProvider) {
+        .config(['$routeProvider', '$locationProvider',
+        function($routeProvider, $locationProvider) {
 
             $routeProvider.when('/', {
                 templateUrl: 'partials/home.html',
@@ -108,5 +109,5 @@
                 controller: 'HomeController',
                 controllerAs: 'vm'
             }).otherwise('/home');
-        });
+        }]);
 })();

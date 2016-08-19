@@ -9,8 +9,7 @@ var passport = require('passport');
 require('./app_api/models/db');
 require('./app_api/config/passport');
 
-var uglifyJs = require('uglify-js');
-var fs = require('fs');
+var uglifyJs = require('./app_utils/uglifier');
 
 var routes = require('./app_server/routes/index');
 var routesApi = require('./app_api/routes/index');
@@ -23,19 +22,7 @@ app.set('view engine', 'jade');
 
 app.use(passport.initialize());
 
-var appClientFiles = [];
-appClientFiles.push('app_client/js/app.js');
-appClientFiles.push('app_client/js/team/controllers.js');
-appClientFiles.push('app_client/js/field/controllers.js');
-appClientFiles.push('app_client/js/player/controllers.js');
-var uglified = uglifyJs.minify(appClientFiles, {compress: false});
-fs.writeFile('public/angular/5x5player.min.js', uglified.code, function(err){
-  if(err){
-    console.log(err);
-  }else{
-    console.log("Script generated and saved:", '5x5player.min.js');
-  }
-});
+uglifyJs.run();
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

@@ -5,7 +5,7 @@
   angular.module('5x5playerApp')
     .controller('NavigationController', navigationCtrl);
 
-  navigationCtrl.$inject = ['$location','$route', 'AuthenticationService'];
+
 
   function navigationCtrl($location, $route, AuthenticationService){
     var navvm = this;
@@ -24,4 +24,6 @@
     };
     init();
   }
+
+  navigationCtrl.$inject = ['$location','$route', 'AuthenticationService'];
 })();

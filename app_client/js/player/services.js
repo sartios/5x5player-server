@@ -4,7 +4,7 @@
     angular.module('player')
         .factory('PlayerService', playerService);
 
-    playerService.$inject = ['$http', 'AuthenticationService'];
+
 
     function playerService($http, AuthenticationService) {
         var service = {};
@@ -44,4 +44,6 @@
         return service;
 
     }
+
+        playerService.$inject = ['$http', 'AuthenticationService'];
 })();

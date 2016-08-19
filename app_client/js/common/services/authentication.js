@@ -4,7 +4,6 @@
   angular.module('5x5playerApp')
     .factory('AuthenticationService', authenticationService);
 
-
   authenticationService.$inject = ['$window', '$http'];
 
   function authenticationService($window, $http){
@@ -57,4 +56,5 @@
 
     return service;
   }
+
 })();

@@ -5,8 +5,6 @@
     .factory('UserService', userService);
 
 
-  userService.$inject = ['$http', 'AuthenticationService'];
-
   function userService($http, AuthenticationService){
     var service = {};
     var config = {
@@ -21,5 +19,7 @@
 
     return service;
   }
+
+  userService.$inject = ['$http', 'AuthenticationService'];
 
 })();

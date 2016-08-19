@@ -11,7 +11,7 @@
   angular.module('app.requests')
     .controller('FieldsModalController', fieldsModalCtrl);
 
-  requestsCtrl.$inject = ['$location'];
+
 
   function requestsCtrl($location){
       var vm = this;
@@ -24,7 +24,7 @@
       init();
   }
 
-  opponentReqCtrl.$inject = ['$route','$modal', 'OpponentRequestService', 'UserService'];
+
 
   function opponentReqCtrl($route, $modal, OpponentRequestService, UserService){
     var vm = this;
@@ -78,7 +78,7 @@
     init();
   }
 
-  fieldsModalCtrl.$inject = ['$modalInstance', 'FieldService'];
+
   function fieldsModalCtrl($modalInstance, FieldService){
     var vm = this;
 
@@ -108,6 +108,7 @@
     init();
   }
 
-
-
+  requestsCtrl.$inject = ['$location'];
+  fieldsModalCtrl.$inject = ['$modalInstance', 'FieldService'];
+  opponentReqCtrl.$inject = ['$route','$modal', 'OpponentRequestService', 'UserService'];
 })();

@@ -8,8 +8,6 @@
   angular.module('5x5playerApp')
     .controller('LoginController', loginCtrl);
 
-  loginCtrl.$inject = ['$location', 'AuthenticationService'];
-
   function loginCtrl($location, AuthenticationService){
     var vm = this;
 
@@ -46,7 +44,7 @@
 
   }
 
-  registerCtrl.$inject = ['$location', 'AuthenticationService'];
+
 
   function registerCtrl($location, AuthenticationService){
     var vm = this;
@@ -83,4 +81,7 @@
     };
     init();
   }
+
+  loginCtrl.$inject = ['$location', 'AuthenticationService'];
+  registerCtrl.$inject = ['$location', 'AuthenticationService'];
 })();
