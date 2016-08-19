@@ -18,7 +18,8 @@
             $routeProvider.when('/teams', {
                 templateUrl: 'partials/team/teams.html',
                 controller: 'TeamListController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireAuth: true
             }).when('/teams/edit/:teamid', {
                 templateUrl: 'partials/team/edit-team.html',
                 controller: 'TeamEditController',
@@ -27,17 +28,20 @@
                     teamId: ['$route', function($route) {
                         return $route.current.params.teamid;
                     }],
-                }
+                },
+                requireAuth: true
             }).when('/teams/new', {
                 templateUrl: 'partials/team/create-team.html',
                 controller: 'TeamCreateController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireAuth: true
             });
 
             $routeProvider.when('/players', {
                 templateUrl: 'partials/player/players.html',
                 controller: 'PlayerListController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireAuth: true
             }).when('/players/edit/:playerid', {
                 templateUrl: 'partials/player/edit-player.html',
                 controller: 'PlayerEditController',
@@ -46,17 +50,20 @@
                     playerId: ['$route', function($route) {
                         return $route.current.params.playerid;
                     }],
-                }
+                },
+                requireAuth: true
             }).when('/players/new', {
                 templateUrl: 'partials/player/create-player.html',
                 controller: 'PlayerCreateController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireAuth: true
             });
 
             $routeProvider.when('/fields', {
                 templateUrl: 'partials/field/fields.html',
                 controller: 'FieldListController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireAuth: true
             }).when('/fields/edit/:fieldid', {
                 templateUrl: 'partials/field/edit-field.html',
                 controller: 'FieldEditController',
@@ -65,11 +72,13 @@
                     fieldId: ['$route', function($route) {
                         return $route.current.params.fieldid;
                     }],
-                }
+                },
+                requireAuth: true
             }).when('/fields/new', {
                 templateUrl: 'partials/field/create-field.html',
                 controller: 'FieldCreateController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireAuth: true
             });
 
             $routeProvider.when('/register',{
@@ -85,11 +94,13 @@
             $routeProvider.when('/requests', {
                 templateUrl: 'partials/requests/home.html',
                 controller: 'RequestsController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireAuth: true
             }).when('/opponent-requests', {
                 templateUrl: 'partials/requests/opponent-requests.html',
                 controller: 'OpponentRequestsController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                requireAuth: true
             });
 
             $routeProvider.when('/home', {
