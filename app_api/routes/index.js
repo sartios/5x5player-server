@@ -11,6 +11,7 @@ var ctrlTeams = require('../controllers/teams');
 var ctrlAuth = require('../controllers/authentication');
 var ctrlOpponentRequest = require('../controllers/opponentRequests');
 var ctrlUser = require('../controllers/users');
+var ctrlPlayerRequest = require('../controllers/playerRequests');
 
 
 /* Fields API */
@@ -50,6 +51,14 @@ router.post('/opponent-requests', auth, ctrlOpponentRequest.opponentRequestsCrea
 router.put('/opponent-requests/:requestId', auth, ctrlOpponentRequest.opponentRequestsCreate);
 router.delete('/opponent-requests', auth, ctrlOpponentRequest.deleteAll);
 router.delete('/opponent-requests/:requestid', auth, ctrlOpponentRequest.opponentRequestsDeleteOne);
+
+/* PlayerRequest API */
+router.get('/player-requests', ctrlPlayerRequest.playerRequestsList);
+router.get('/player-request/:requestid', ctrlPlayerRequest.playerRequestReadOne);
+router.post('/player-requests', auth, ctrlPlayerRequest.playerRequestCreateOne);
+router.put('/player-requests/:requestid', auth, ctrlPlayerRequest.playerRequestUpdateOne);
+router.delete('/player-requests', auth, ctrlPlayerRequest.playerRequestsDeleteAll);
+router.delete('/player-requests/:requestid', auth, ctrlPlayerRequest.playerRequestsDeleteOne);
 
 /* User API*/
 router.get('/user/teams', auth, ctrlUser.teamsList);
