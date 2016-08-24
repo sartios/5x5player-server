@@ -1,4 +1,4 @@
-var ObjectId = require('mongoose').ObjectId;
+var ObjectId = require('mongodb').ObjectId;
 var expect = require('chai').expect;
 var request = require('request');
 var apiOptions = {
@@ -62,6 +62,7 @@ describe('PlayerReuqest API', function() {
     }
 
     function testPlayerRequestsDeleteOne() {
+      beforeEach(createPlayerRequest);
       it('should delete player request specified by the id', deletePlayerRequestByIdTest);
       it('should return 401 for unauthorized user', deletePlayerRequestByIdUnauthorizedTest);
     }
@@ -75,7 +76,7 @@ describe('PlayerReuqest API', function() {
         expect(response.statusCode).to.equal(200);
         expect(body.length).to.equal(1);
         expect(body[0].team).to.equal(playerRequest.team._id);
-        expect(body[0].date).to.equal(playerRequest.date);
+        expect(body[0].date).to.equal(playerRequest.date.toISOString());
         expect(body[0].numberOfPlayers).to.equal(playerRequest.numberOfPlayers);
         expect(body[0].createOn).to.equal(playerRequest.createOn);
         expect(body[0].modifiedOn).to.equal(playerRequest.modifiedOn);
@@ -97,9 +98,9 @@ describe('PlayerReuqest API', function() {
     function getPlayerRequestsByIdTest(done){
       loadGetPlayerRequestByIdOptions(playerRequest._id);
       request(requestOptions, function(err, response, body){
-        expect(reponse.statusCode).to.equal(200);
+        expect(response.statusCode).to.equal(200);
         expect(body.team).to.equal(playerRequest.team._id);
-        expect(body.date).to.equal(playerRequest.date);
+        expect(body.date).to.equal(playerRequest.date.toISOString());
         expect(body.numberOfPlayers).to.equal(playerRequest.numberOfPlayers);
         expect(body.createOn).to.equal(playerRequest.createOn);
         expect(body.modifiedOn).to.equal(playerRequest.modifiedOn);
@@ -135,11 +136,11 @@ describe('PlayerReuqest API', function() {
       });
     }
 
-    function getPlayerRequestsByIdUndefinedIdTest(){
+    function getPlayerRequestsByIdUndefinedIdTest(done){
       loadGetPlayerRequestByIdOptions(undefined);
       request(requestOptions, function(err, response, body){
-        expect(response.statusCode).to.equal(200);
-        expect(body.length).to.equal(1);
+        expect(response.statusCode).to.equal(404);
+        expect(body.message).to.equal('PlayerRequest with ID: undefined did not found');
         done();
       });
     }
@@ -149,9 +150,9 @@ describe('PlayerReuqest API', function() {
       loadPlayerRequest();
       loadCreatePlayerRequestOptions();
       request(requestOptions, function(err, response, body){
-        expect(reponse.statusCode).to.equal(200);
+        expect(response.statusCode).to.equal(200);
         expect(body.team).to.equal(playerRequest.team._id);
-        expect(body.date).to.equal(playerRequest.date);
+        expect(body.date).to.equal(playerRequest.date.toISOString());
         expect(body.numberOfPlayers).to.equal(playerRequest.numberOfPlayers);
         expect(body.createOn).to.not.be.undefined;
         expect(body.modifiedOn).to.not.be.undefined;
@@ -216,13 +217,12 @@ describe('PlayerReuqest API', function() {
     // PUT /api/player-requests/:requestid
 
     function updatePlayerRequestTest(done){
-      loadPlayerRequest();
       playerRequest.date = new Date();
       loadUpdatePlayerRequestOptions(playerRequest._id, playerRequest);
       request(requestOptions, function(err, response, body){
-        expect(reponse.statusCode).to.equal(200);
+        expect(response.statusCode).to.equal(200);
         expect(body.team).to.equal(playerRequest.team._id);
-        expect(body.date).to.equal(playerRequest.date);
+        expect(body.date).to.equal(playerRequest.date.toISOString());
         expect(body.numberOfPlayers).to.equal(playerRequest.numberOfPlayers);
         expect(body.createOn).to.equal(playerRequest.createOn);
         expect(body.modifiedOn).to.not.equal(playerRequest.modifiedOn);
@@ -238,7 +238,7 @@ describe('PlayerReuqest API', function() {
       playerRequest.team = team;
       loadUpdatePlayerRequestOptions(playerRequest._id, playerRequest);
       request(requestOptions, function(err, response, body){
-        expect(reponse.statusCode).to.equal(404);
+        expect(response.statusCode).to.equal(404);
         done();
       });
     }
@@ -249,7 +249,7 @@ describe('PlayerReuqest API', function() {
       playerRequest.field = field;
       loadUpdatePlayerRequestOptions(playerRequest._id, playerRequest);
       request(requestOptions, function(err, response, body){
-        expect(reponse.statusCode).to.equal(404);
+        expect(response.statusCode).to.equal(404);
         done();
       });
     }
@@ -259,7 +259,7 @@ describe('PlayerReuqest API', function() {
       loadUpdatePlayerRequestOptions(playerRequest._id, playerRequest);
       delete requestOptions.headers;
       request(requestOptions, function(err, response, body){
-        expect(reponse.statusCode).to.equal(401);
+        expect(response.statusCode).to.equal(401);
         done();
       });
     }
@@ -269,7 +269,7 @@ describe('PlayerReuqest API', function() {
       delete playerRequest.team;
       loadUpdatePlayerRequestOptions(playerRequest._id, playerRequest);
       request(requestOptions, function(err, response, body){
-        expect(reponse.statusCode).to.equal(404);
+        expect(response.statusCode).to.equal(404);
         done();
       });
     }
@@ -279,7 +279,7 @@ describe('PlayerReuqest API', function() {
       delete playerRequest.field;
       loadUpdatePlayerRequestOptions(playerRequest._id, playerRequest);
       request(requestOptions, function(err, response, body){
-        expect(reponse.statusCode).to.equal(404);
+        expect(response.statusCode).to.equal(404);
         done();
       });
     }
@@ -345,7 +345,7 @@ describe('PlayerReuqest API', function() {
       loadPlayerRequest();
       loadCreatePlayerRequestOptions();
       request(requestOptions, function(err, response, body){
-        expect(reponse.statusCode).to.equal(200);
+        expect(response.statusCode).to.equal(200);
         playerRequest._id = body._id;
         playerRequest.createOn = body.createOn;
         playerRequest.modifiedOn = body.modifiedOn;
@@ -362,6 +362,18 @@ describe('PlayerReuqest API', function() {
     }
 
     // Load request options
+
+    var loadDeletePlayerRequestOptions = function(){
+      requestOptions = {
+        url: apiOptions.server + '/api/player-requests',
+        method: 'DELETE',
+        json: {},
+        qs: {},
+        headers:{
+          authorization: 'Bearer ' + apiOptions.token
+        }
+      };
+    };
 
     var loadUpdatePlayerRequestOptions = function(requestid, request){
       requestOptions = {
@@ -453,7 +465,7 @@ describe('PlayerReuqest API', function() {
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(204);
       });
-      //requestOptions.url = apiOptions.server + '/api/player-requests';
+      requestOptions.url = apiOptions.server + '/api/player-requests';
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(204);
         done();
