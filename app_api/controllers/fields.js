@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
+var log4js = require('log4js');
 var Field = mongoose.model('Field');
+var logger = log4js.getLogger('fields.js');
 
 var sendJSONresponse = function(res, status, content){
   res.status(status);
@@ -10,7 +12,7 @@ var sendJSONresponse = function(res, status, content){
 module.exports.fieldsList = function(req, res){
   Field.find({}, function(err, results, stats){
     if(err){
-      console.log('find error: ', err);
+      logger.debug('find error: ', err);
       sendJSONresponse(res, 404, err);
     }else{
       sendJSONresponse(res, 200, results);
@@ -19,7 +21,7 @@ module.exports.fieldsList = function(req, res){
 };
 
 module.exports.fieldsCreate = function(req, res){
-  console.log(req.body);
+  logger.debug(req.body);
   Field.create({
     name: req.body.name,
     company: {name: req.body.company},
@@ -27,17 +29,17 @@ module.exports.fieldsCreate = function(req, res){
     user : req.payload
   }, function(err, field){
     if(err){
-      console.log(err);
+      logger.debug(err);
       sendJSONresponse(res, 400, err);
     }else{
-      console.log(field);
+      logger.debug(field);
       sendJSONresponse(res, 200, field);
     }
   });
 };
 
 module.exports.fieldsReadOne = function(req, res){
-  console.log('Finding field details', req.params);
+  logger.debug('Finding field details', req.params);
   if(req.params && req.params.fieldid){
     Field
       .findById(req.params.fieldid)
@@ -48,15 +50,15 @@ module.exports.fieldsReadOne = function(req, res){
           });
           return;
         }else if(err){
-          console.log(err);
+          logger.debug(err);
           sendJSONresponse(res, 404, err);
           return;
         }
-        console.log(field);
+        logger.debug(field);
         sendJSONresponse(res, 200, field);
       });
   } else {
-    console.log('No fieldid specified');
+    logger.debug('No fieldid specified');
     sendJSONresponse(res, 404, {
       "message": "No fieldid in request"
     });
@@ -107,11 +109,11 @@ module.exports.fieldsDeleteOne = function(req, res){
       .exec(
         function(err, field){
           if(err){
-            console.log(err);
+            logger.debug(err);
             sendJSONresponse(res, 404, err);
             return;
           }
-          console.log('Field id ' + fieldid + ' deleted');
+          logger.debug('Field id ' + fieldid + ' deleted');
           sendJSONresponse(res, 204, null);
         });
   }else{
@@ -125,11 +127,11 @@ module.exports.deleteAll = function(req, res){
   Field
     .remove({}, function(err, field){
       if(err){
-        console.log(err);
+        logger.debug(err);
         sendJSONresponse(res, 404, err);
         return;
       }
-      console.log('Fields collections have been deleted.');
+      logger.debug('Fields collections have been deleted.');
       sendJSONresponse(res, 204, null);
     });
 };

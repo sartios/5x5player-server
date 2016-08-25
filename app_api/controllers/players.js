@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var log4js = require('log4js');
+var logger = log4js.getLogger('players.js');
 var Player = mongoose.model('Player');
 
 
@@ -10,7 +12,7 @@ var sendJSONresponse = function(res, status, message){
 module.exports.playersList = function(req, res){
   Player.find({}, function(err, result, stats){
     if(err){
-      console.log('find error: ', err);
+      logger.debug('find error: ', err);
       sendJSONresponse(res, 404, err);
     }else{
       sendJSONresponse(res, 200, result);
@@ -19,7 +21,7 @@ module.exports.playersList = function(req, res){
 };
 
 module.exports.playersCreate = function(req, res){
-  console.log(req.body);
+  logger.debug(req.body);
   Player.create({
       name: req.body.name,
       position: req.body.position,
@@ -31,7 +33,7 @@ module.exports.playersCreate = function(req, res){
       user: req.payload
   }, function(err, player){
     if(err){
-      console.log(err);
+      logger.debug(err);
       sendJSONresponse(res, 404, err);
     }else if(player){
       sendJSONresponse(res, 200, player);
@@ -40,7 +42,7 @@ module.exports.playersCreate = function(req, res){
 };
 
 module.exports.playersReadOne = function(req, res){
-  console.log('Finding player details', req.params);
+  logger.debug('Finding player details', req.params);
   if(req.params && req.params.playerid){
     Player
       .findById(req.params.playerid)
@@ -51,15 +53,15 @@ module.exports.playersReadOne = function(req, res){
           });
           return;
         }else if(err){
-          console.log(err);
+          logger.debug(err);
           sendJSONresponse(res, 404, err);
           return;
         }
-        console.log(player);
+        logger.debug(player);
         sendJSONresponse(res, 200, player);
       });
   }else{
-    console.log('No playerid specified');
+    logger.debug('No playerid specified');
     sendJSONresponse(res, 404, {
       "message": "No playerid in request"
     });
@@ -107,11 +109,11 @@ module.exports.playersDeleteOne = function(req, res){
       .findByIdAndRemove(playerid)
       .exec(function(err, player){
         if(err){
-          console.log(err);
+          logger.debug(err);
           sendJSONresponse(res, 404, err);
           return;
         }
-        console.log('Player id ' + playerid + ' deleted');
+        logger.debug('Player id ' + playerid + ' deleted');
         sendJSONresponse(res, 204, null);
       });
   }else{
@@ -125,11 +127,11 @@ module.exports.deleteAll = function(req, res){
   Player
     .remove({}, function(err){
       if(err){
-        console.log(err);
+        logger.debug(err);
         sendJSONresponse(res, 404, err);
         return;
       }
-      console.log('Players collection has been deleted');
+      logger.debug('Players collection has been deleted');
       sendJSONresponse(res, 204, null);
     });
 };

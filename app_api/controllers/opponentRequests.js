@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var Q = require('q');
+var log4js = require('log4js');
+var logger = log4js.getLogger('opponentRequests.js');
 var OpponentRequest = mongoose.model('OpponentRequest');
 var Team = mongoose.model('Team');
 var Field = mongoose.model('Field');
@@ -10,10 +12,10 @@ var sendJSONresponse = function(res, status, message){
 };
 
 module.exports.opponentRequestsList = function(req, res){
-  console.log('opponentRequestsList()');
+  logger.debug('opponentRequestsList()');
   OpponentRequest.find({}, function(err, result, stats){
     if(err){
-      console.log('find opponent requests error', err);
+      logger.debug('find opponent requests error', err);
       sendJSONresponse(res, 404, err);
     }else{
       sendJSONresponse(res, 200, result);
@@ -27,7 +29,7 @@ module.exports.opponentRequestsPopulateList = function(req, res){
   .populate('field', 'name')
   .exec(function(err, result, stats){
     if(err){
-      console.log('find opponent requests error', err);
+      logger.debug('find opponent requests error', err);
       sendJSONresponse(res, 404, err);
     }else{
       sendJSONresponse(res, 200, result);
@@ -36,7 +38,7 @@ module.exports.opponentRequestsPopulateList = function(req, res){
 };
 
 module.exports.opponentRequestReadOne = function(req, res){
-  console.log('opponentRequestReadOne()');
+  logger.debug('opponentRequestReadOne()');
   if(req.params.requestid){
     OpponentRequest.findById(req.params.requestid)
       .exec(function(err, opponentRequest){
@@ -46,15 +48,15 @@ module.exports.opponentRequestReadOne = function(req, res){
           });
           return;
         }else if(err){
-          console.log(err);
+          logger.debug(err);
           sendJSONresponse(res, 404, err);
           return;
         }
-        console.log(opponentRequest);
+        logger.debug(opponentRequest);
         sendJSONresponse(res, 200, opponentRequest);
       });
   }else{
-    console.log('No requestid in request');
+    logger.debug('No requestid in request');
     sendJSONresponse(res, 404, {
       "message": "No requestid in request"
     });
@@ -62,7 +64,7 @@ module.exports.opponentRequestReadOne = function(req, res){
 };
 
 module.exports.opponentRequestsCreate = function(req, res) {
-    console.log('opponentRequestsCreate()');
+    logger.debug('opponentRequestsCreate()');
     validateRequest(req, res)
         .then(function(msg) {
             return validateTeam(req, res);
@@ -76,7 +78,7 @@ module.exports.opponentRequestsCreate = function(req, res) {
 };
 
 module.exports.opponentRequestsUpdateOne = function(req, res){
-  console.log('opponentRequestsUpdateOne()');
+  logger.debug('opponentRequestsUpdateOne()');
   validateUpdateRequest(req, res)
     .then(function(){
       return validateTeam(req, res);
@@ -90,10 +92,10 @@ module.exports.opponentRequestsUpdateOne = function(req, res){
 };
 
 module.exports.deleteAll = function(req, res){
-  console.log('opponentRequestsUpdateOne()');
+  logger.debug('opponentRequestsUpdateOne()');
   OpponentRequest.remove({}, function(err, opponentRequest){
     if(err){
-      console.log(err);
+      logger.debug(err);
       sendJSONresponse(res, 404, err);
       return;
     }
@@ -107,7 +109,7 @@ module.exports.opponentRequestsDeleteOne = function(req, res){
     OpponentRequest.findByIdAndRemove(requestid)
     .exec(function(err, opponentRequest){
       if(err){
-        console.log(err);
+        logger.debug(err);
         sendJSONresponse(res, 404, err);
         return;
       }
@@ -125,7 +127,7 @@ var updateOpponentRequest = function(req, res){
         });
         return;
       }else if(err){
-        console.log(err);
+        logger.debug(err);
         sendJSONresponse(res, 404, err);
         return;
       }
@@ -136,10 +138,10 @@ var updateOpponentRequest = function(req, res){
 
       opponentRequest.save(function(err, opponentRequest){
         if(err){
-          console.log(err);
+          logger.debug(err);
           sendJSONresponse(res, 404, err);
         }else {
-          console.log(opponentRequest);
+          logger.debug(opponentRequest);
           sendJSONresponse(res, 200, opponentRequest);
         }
       });
@@ -147,7 +149,7 @@ var updateOpponentRequest = function(req, res){
 };
 
 var validateUpdateRequest = function(req, res){
-  console.log('------ validateRequest()');
+  logger.debug('------ validateRequest()');
   var  deferred = Q.defer();
   if(!req.body.field || !req.body.date || !req.payload){
     sendJSONresponse(res, 404, {
@@ -160,7 +162,7 @@ var validateUpdateRequest = function(req, res){
 };
 
 var validateRequest = function(req, res) {
-    console.log('------ validateRequest()');
+    logger.debug('------ validateRequest()');
     var deferred = Q.defer();
     if (!req.body.team || !req.body.field || !req.body.date || !req.payload) {
         sendJSONresponse(res, 404, {
@@ -173,7 +175,7 @@ var validateRequest = function(req, res) {
 };
 
 var validateField = function(req, res) {
-    console.log('------ validateField()');
+    logger.debug('------ validateField()');
     var deferred = Q.defer();
     Field.findById(req.body.field._id)
         .exec(function(err, field) {
@@ -183,7 +185,7 @@ var validateField = function(req, res) {
                 });
                 deferred.reject('Field not found');
             } else if (err) {
-                console.log(err);
+                logger.debug(err);
                 sendJSONresponse(res, 404, err);
                 deferred.error(err);
             }
@@ -193,7 +195,7 @@ var validateField = function(req, res) {
 };
 
 var validateTeam = function(req, res) {
-    console.log('------ validateTeam()');
+    logger.debug('------ validateTeam()');
     var deferred = Q.defer();
     Team.findById(req.body.team._id)
         .exec(function(err, team) {
@@ -203,7 +205,7 @@ var validateTeam = function(req, res) {
                 });
                 deferred.reject('Team not found');
             } else if (err) {
-                console.log(err);
+                logger.debug(err);
                 sendJSONresponse(res, 404, err);
                 deferred.reject(err);
             }
@@ -214,7 +216,7 @@ var validateTeam = function(req, res) {
 };
 
 var createOpponentRequest = function(req, res) {
-    console.log('------ createOpponentRequest()');
+    logger.debug('------ createOpponentRequest()');
     OpponentRequest.create({
         team: req.body.team,
         field: req.body.field,
@@ -222,7 +224,7 @@ var createOpponentRequest = function(req, res) {
         user: req.payload,
     }, function(err, opponentRequest) {
         if (err) {
-            console.log(err);
+            logger.debug(err);
             sendJSONresponse(res, 404, err);
         } else if (opponentRequest) {
             sendJSONresponse(res, 200, opponentRequest);

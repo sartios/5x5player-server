@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var log4js = require('log4js');
+var logger = log4js.getLogger('teams.js');
 var Team = mongoose.model('Team');
 var Player = mongoose.model('Player');
 
@@ -10,7 +12,7 @@ var sendJSONresponse = function(res, status, message){
 module.exports.teamsList = function(req, res){
   Team.find({}, function(err, result, stats){
     if(err){
-      console.log('find error: ', err);
+      logger.debug('find error: ', err);
       sendJSONresponse(res, 404, err);
     }else{
       sendJSONresponse(res, 200, result);
@@ -19,7 +21,7 @@ module.exports.teamsList = function(req, res){
 };
 
 module.exports.teamsCreate = function(req, res){
-  console.log(req.body);
+  logger.debug(req.body);
   var promises = validatePlayers(req);
   if(promises.length > 0){
     Promise.all(promises)
@@ -39,7 +41,7 @@ module.exports.teamsCreate = function(req, res){
         createTeam(req, res);
       }
     })
-    .catch(console.log);
+    .catch(logger.debug);
   }else{
     createTeam(req, res);
   }
@@ -54,7 +56,7 @@ var createTeam = function(req, res){
     user: req.payload
   }, function(err, team){
     if(err){
-      console.log(err);
+      logger.debug(err);
       sendJSONresponse(res, 404, err);
     }else if(team){
       sendJSONresponse(res, 200, team);
@@ -76,7 +78,7 @@ var validatePlayers = function(req){
 };
 
 module.exports.teamsReadOne = function(req, res){
-  console.log('Finding team details', req.params);
+  logger.debug('Finding team details', req.params);
   if(req.params && req.params.teamid){
     Team
       .findById(req.params.teamid)
@@ -87,15 +89,15 @@ module.exports.teamsReadOne = function(req, res){
           });
           return;
         }else if(err){
-          console.log(err);
+          logger.debug(err);
           sendJSONresponse(res, 404, err);
           return;
         }
-        console.log(team);
+        logger.debug(team);
         sendJSONresponse(res, 200, team);
       });
   }else{
-    console.log('No teamid specified');
+    logger.debug('No teamid specified');
     sendJSONresponse(res, 404, {
       "message": "No teamid in request"
     });
@@ -130,7 +132,7 @@ module.exports.teamsUpdateOne = function(req, res){
         if(err){
           sendJSONresponse(res, 404, err);
         }else{
-          console.log(team);
+          logger.debug(team);
           sendJSONresponse(res, 200, team);
         }
       });
@@ -153,21 +155,21 @@ module.exports.teamsAddPlayer = function(req, res){
         });
         return;
       }else if(err){
-        console.log('error: ', err);
+        logger.debug('error: ', err);
         sendJSONresponse(res, 404, {
           "message": "teamid not found"
         });
         return;
       }
-      console.log('Add player: ' , req.body.playerid);
+      logger.debug('Add player: ' , req.body.playerid);
       team.players.push(req.body.playerid);
       team.modifiedOn = new Date();
       team.save(function(err, team){
         if(err){
-          console.log('error: ', err);
+          logger.debug('error: ', err);
           sendJSONresponse(res, 404, err);
         }else{
-          console.log('Updated: ', team);
+          logger.debug('Updated: ', team);
           sendJSONresponse(res, 200, team);
         }
       });
@@ -223,11 +225,11 @@ module.exports.teamsDeleteOne = function(req, res){
       .findByIdAndRemove(teamid)
       .exec(function(err, team){
         if(err){
-          console.log(err);
+          logger.debug(err);
           sendJSONresponse(res, 404, err);
           return;
         }
-        console.log('Team id ' + teamid + ' deleted');
+        logger.debug('Team id ' + teamid + ' deleted');
         sendJSONresponse(res, 204, null);
       });
   }else{
@@ -241,11 +243,11 @@ module.exports.deleteAll = function(req, res){
   Team
     .remove({},function(err, team){
       if(err){
-        console.log(err);
+        logger.debug(err);
         sendJSONresponse(res, 404, err);
         return;
       }
-      console.log('Teams collections have been deleted');
+      logger.debug('Teams collections have been deleted');
       sendJSONresponse(res, 204, null);
     });
 };

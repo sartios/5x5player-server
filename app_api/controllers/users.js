@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var log4js = require('log4js');
+var logger = log4js.getLogger('users.js');
 var Team = mongoose.model('Team');
 var Player = mongoose.model('Player');
 var Field = mongoose.model('Field');
@@ -15,7 +17,7 @@ module.exports.teamsList = function(req, res) {
             user: req.payload
         }).exec(function(err, teams) {
             if (err) {
-                console.log(err);
+                logger.debug(err);
                 sendJSONresponse(res, 404, err);
                 return;
             }
@@ -30,7 +32,7 @@ module.exports.playersList = function(req, res) {
             user: req.payload
         }).exec(function(err, players) {
             if (err) {
-                console.log(err);
+                logger.debug(err);
                 sendJSONresponse(res, 404, err);
                 return;
             }
@@ -46,7 +48,7 @@ module.exports.fieldsList = function(req, res) {
             user: req.payload
         }).exec(function(err, fields) {
             if (err) {
-                console.log(err);
+                logger.debug(err);
                 sendJSONresponse(res, 404, err);
                 return;
             }
@@ -61,7 +63,7 @@ module.exports.opponentRequestsList = function(req, res) {
             user: req.payload
         }).exec(function(err, opponentRequests) {
             if (err) {
-                console.log(err);
+                logger.debug(err);
                 sendJSONresponse(res, 404, err);
                 return;
             }
