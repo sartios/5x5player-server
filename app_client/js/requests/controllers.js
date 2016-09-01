@@ -110,8 +110,37 @@
     init();
   }
 
-  function playerReqCtrl(PlayerRequestService){
+  function playerReqCtrl($route, $modal, PlayerRequestService, UserService){
     var vm = this;
+    var teams = [];
+
+    vm.openFields = function(){
+      var dialog = $modal.open({
+        templateUrl: 'partials/modals/fields-modal.html',
+        controller: 'FieldsModalController as vm'
+      });
+
+      dialog.result.then(function(data){
+        if(data.length > 0){
+          vm.playerReq.field = data[0];
+        }
+      });
+    };
+
+    vm.createRequest = function(){
+      if(teams.length > 0){
+        vm.playerReq.team = angular.copy(teams[0]);
+      }
+      PlayerRequestService.createRequest(vm.playerReq).success(function(data){
+        $route.reload();
+      });
+    };
+
+    var loadTeams = function(){
+      UserService.getTeams().success(function(data){
+        teams = data;
+      });
+    };
 
     var loadRequests = function(){
       PlayerRequestService.getRequests()
@@ -126,8 +155,10 @@
     };
 
     var init = function(){
+      vm.playerReq = { field: {}, team: {}};
       loadViews();
       loadRequests();
+      loadTeams();
     };
 
     init();
@@ -136,5 +167,5 @@
   requestsCtrl.$inject = ['$location'];
   fieldsModalCtrl.$inject = ['$modalInstance', 'FieldService'];
   opponentReqCtrl.$inject = ['$route','$modal', 'OpponentRequestService', 'UserService'];
-  playerReqCtrl.$inject = ['PlayerRequestService'];
+  playerReqCtrl.$inject = ['$route', '$modal', 'PlayerRequestService', 'UserService'];
 })();
