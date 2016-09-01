@@ -6,3 +6,10 @@ body {
 a {
   color: #00B7FF;
 }
+
+.field-search {
+    float: right;
+    margin-top: -23px;
+    margin-right: 10px;
+    z-index: 1000;
+}
