@@ -127,6 +127,13 @@
       });
     };
 
+    vm.remove = function(requestid){
+      PlayerRequestService.deleteRequest(requestid)
+      .success(function(data){
+        $route.reload();
+      });
+    };
+
     vm.createRequest = function(){
       if(teams.length > 0){
         vm.playerReq.team = angular.copy(teams[0]);

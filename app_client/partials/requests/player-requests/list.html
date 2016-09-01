@@ -6,6 +6,7 @@
         <th>Date</th>
         <th>Field</th>
         <th>Players Needed</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -14,6 +15,8 @@
         <td>{{req.date}}</td>
         <td>{{req.field.name}}</td>
         <td>{{req.numberOfPlayers}}</td>
+        <td><a href="#/player-requests" ng-click="vm.remove(req._id)">
+          <span class="glyphicon glyphicon-remove"></span></a></td>
       </tr>
     </tbody>
   </table>
