@@ -24,6 +24,8 @@ describe('PlayerReuqest API', function() {
     function testPlayerRequestsList() {
       beforeEach(createPlayerRequest);
       it('should return player requests', getPlayerRequestsTest);
+      it('should return player requests with team name', getPlayerRequestsPopulateTeamTest);
+      it('should return player requests with field name', getPlayerRequestsPopulateFieldTest);
       it('should return 401 on unauthorized users', getUnauthorizedPlayerRequestsTest);
     }
 
@@ -71,11 +73,48 @@ describe('PlayerReuqest API', function() {
 
     // GET /api/player-requests
     function getPlayerRequestsTest(){
-      loadGetPlayerRequestOptions(playerRequest._id);
+      loadGetPlayerRequestOptions();
       request(requestOptions, function(err, response, body){
         expect(response.statusCode).to.equal(200);
         expect(body.length).to.equal(1);
-        expect(body[0].team).to.equal(playerRequest.team._id);
+        expect(body[0].team._id).to.equal(playerRequest.team._id);
+        expect(body[0].field._id).to.equal(playerRequest.field._id);
+        expect(body[0].date).to.equal(playerRequest.date.toISOString());
+        expect(body[0].numberOfPlayers).to.equal(playerRequest.numberOfPlayers);
+        expect(body[0].createOn).to.equal(playerRequest.createOn);
+        expect(body[0].modifiedOn).to.equal(playerRequest.modifiedOn);
+        expect(body[0]._id).to.equal(playerRequest._id);
+        expect(body[0].user).to.equal(playerRequest.user);
+      });
+    }
+
+    function getPlayerRequestsPopulateTeamTest(){
+      loadGetPlayerRequestOptions();
+      request(requestOptions, function(err, response, body){
+        expect(response.statusCode).to.equal(200);
+        expect(body.length).to.equal(1);
+        expect(body[0].team._id).to.equal(playerRequest.team._id);
+        expect(body[0].team.name).to.equal(playerRequest.team.name);
+        expect(body[0].field._id).to.equal(playerRequest.field._id);
+        expect(body[0].field.name).to.equal(playerRequest.field.name);
+        expect(body[0].date).to.equal(playerRequest.date.toISOString());
+        expect(body[0].numberOfPlayers).to.equal(playerRequest.numberOfPlayers);
+        expect(body[0].createOn).to.equal(playerRequest.createOn);
+        expect(body[0].modifiedOn).to.equal(playerRequest.modifiedOn);
+        expect(body[0]._id).to.equal(playerRequest._id);
+        expect(body[0].user).to.equal(playerRequest.user);
+      });
+    }
+
+    function getPlayerRequestsPopulateFieldTest(){
+      loadGetPlayerRequestOptions();
+      request(requestOptions, function(err, response, body){
+        expect(response.statusCode).to.equal(200);
+        expect(body.length).to.equal(1);
+        expect(body[0].team._id).to.equal(playerRequest.team._id);
+        expect(body[0].team.name).to.equal(playerRequest.team.name);
+        expect(body[0].field._id).to.equal(playerRequest.field._id);
+        expect(body[0].field.name).to.equal(playerRequest.field.name);
         expect(body[0].date).to.equal(playerRequest.date.toISOString());
         expect(body[0].numberOfPlayers).to.equal(playerRequest.numberOfPlayers);
         expect(body[0].createOn).to.equal(playerRequest.createOn);

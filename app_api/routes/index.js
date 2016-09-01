@@ -53,7 +53,7 @@ router.delete('/opponent-requests', auth, ctrlOpponentRequest.deleteAll);
 router.delete('/opponent-requests/:requestid', auth, ctrlOpponentRequest.opponentRequestsDeleteOne);
 
 /* PlayerRequest API */
-router.get('/player-requests', auth, ctrlPlayerRequest.playerRequestsList);
+router.get('/player-requests', auth, ctrlPlayerRequest.playerRequestPopulateList);
 router.get('/player-requests/:requestid', auth, ctrlPlayerRequest.playerRequestReadOne);
 router.post('/player-requests', auth, ctrlPlayerRequest.playerRequestCreateOne);
 router.put('/player-requests/:requestid', auth, ctrlPlayerRequest.playerRequestUpdateOne);

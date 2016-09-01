@@ -10,9 +10,9 @@
     </thead>
     <tbody>
       <tr ng-repeat="req in vm.requests">
-        <td>{{req.team}}</td>
+        <td>{{req.team.name}}</td>
         <td>{{req.date}}</td>
-        <td>{{req.field}}</td>
+        <td>{{req.field.name}}</td>
         <td>{{req.numberOfPlayers}}</td>
       </tr>
     </tbody>

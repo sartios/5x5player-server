@@ -22,6 +22,20 @@ module.exports.playerRequestsList = function(req, res){
     });
 };
 
+module.exports.playerRequestPopulateList = function(req, res){
+  PlayerRequest.find({})
+  .populate("team", "name")
+  .populate("field", "name")
+  .exec(function(err, results, stats){
+    if(err){
+      logger.error('find player requests error', err);
+      sendJSONresponse(res, 404, err);
+    }else{
+      sendJSONresponse(res, 200, results);
+    }
+  });
+};
+
 module.exports.playerRequestReadOne = function(req, res){
   logger.debug('playerRequestReadOne()');
   validateRequest(req, res, getPlayerRequestById);
