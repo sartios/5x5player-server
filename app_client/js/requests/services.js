@@ -16,12 +16,28 @@
             }
         };
 
+        service.getRequests = function(){
+            return $http.get('/api/opponent-requests', config);
+        };
+
+        service.getRequestById = function(requestid){
+            return $http.get('/api/opponent-requests/' + requestid, config);
+        };
+
         service.createRequest = function(opponentRequest) {
             return $http.post('/api/opponent-requests', opponentRequest, config);
         };
 
-        service.getRequests = function(){
-            return $http.get('/api/opponent-requests', config);
+        service.updateRequest = function(requestid, opponentRequest){
+            return $http.put('/api/opponent-requests/' + requestid, opponentRequest);
+        };
+
+        service.deleteRequests = function(){
+            return $http.delete('/api/opponent-requests/', config);
+        };
+
+        service.deleteRequest = function(requestid){
+            return $http.delete('/api/opponent-requests/' + requestid, config);
         };
 
         return service;

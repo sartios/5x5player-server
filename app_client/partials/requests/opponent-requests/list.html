@@ -5,6 +5,7 @@
         <th>Team</th>
         <th>Date</th>
         <th>Field</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -12,6 +13,8 @@
         <td>{{req.team.name}}</td>
         <td>{{req.date}}</td>
         <td>{{req.field.name}}</td>
+        <td><a href="#/opponent-requests" ng-click="vm.remove(req._id)">
+          <span class="glyphicon glyphicon-remove"></span></a></td>
       </tr>
     </tbody>
   </table>

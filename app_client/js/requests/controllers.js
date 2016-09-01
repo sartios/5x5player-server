@@ -54,6 +54,12 @@
       });
     };
 
+    vm.remove = function(requestid){
+      OpponentRequestService.deleteRequest(requestid).success(function(data){
+        $route.reload();
+      });
+    };
+
     var loadViews = function(){
       vm.createView = 'partials/requests/opponent-requests/create.html';
       vm.view = 'partials/requests/opponent-requests/list.html';
