@@ -11,6 +11,8 @@
   angular.module('app.requests')
     .controller('FieldsModalController', fieldsModalCtrl);
 
+    angular.module('app.requests')
+      .controller('PlayerRequestsController', playerReqCtrl);
 
 
   function requestsCtrl($location){
@@ -108,7 +110,31 @@
     init();
   }
 
+  function playerReqCtrl(PlayerRequestService){
+    var vm = this;
+
+    var loadRequests = function(){
+      PlayerRequestService.getRequests()
+      .success(function(data){
+        vm.requests = data;
+      });
+    };
+
+    var loadViews = function(){
+      vm.createView = 'partials/requests/player-requests/create.html';
+      vm.view = 'partials/requests/player-requests/list.html';
+    };
+
+    var init = function(){
+      loadViews();
+      loadRequests();
+    };
+
+    init();
+  }
+
   requestsCtrl.$inject = ['$location'];
   fieldsModalCtrl.$inject = ['$modalInstance', 'FieldService'];
   opponentReqCtrl.$inject = ['$route','$modal', 'OpponentRequestService', 'UserService'];
+  playerReqCtrl.$inject = ['PlayerRequestService'];
 })();

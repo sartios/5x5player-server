@@ -7,14 +7,14 @@
       <div id="page-content">
         <div class="row">
           <div class="col-sm-12">
-            <ul>
-              <li>
-                <a class="btn btn-default" href="#/opponent-requests"><span>Opponent Request</span></a>
-              </li>
-              <li>
-                <a class="btn btn-default" href="#/player-requests"><span>Player Request</span></a>
-              </li>
-            </ul>
+            <div class="create-request" ng-include="vm.createView">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="create-request" ng-include="vm.view">
+            </div>
           </div>
         </div>
       </div></div>

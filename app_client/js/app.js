@@ -102,6 +102,11 @@
                 controller: 'OpponentRequestsController',
                 controllerAs: 'vm',
                 requireAuth: true
+            }).when('/player-requests', {
+                templateUrl: 'partials/requests/player-requests.html',
+                controller: 'PlayerRequestsController',
+                controllerAs: 'vm',
+                requireAuth: true
             });
 
             $routeProvider.when('/home', {
